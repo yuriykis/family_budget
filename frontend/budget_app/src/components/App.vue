@@ -1,38 +1,40 @@
 <template>
   <v-app>
-    <v-app-bar v-show="isAuthenticated" app dark>
-      <div class="d-flex align-center">
-        <v-img alt="Vuetify Logo" class="shrink mr-2" contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png" transition="scale-transition" width="40" />
-
-        <v-img alt="Vuetify Name" class="shrink mt-1 hidden-sm-and-down" contain min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png" width="100" />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn text>
-        <span class="mr-2">Logout</span>
-        <v-icon>mdi-logout-variant</v-icon>
-      </v-btn>
-    </v-app-bar>
-
     <v-main>
-      <router-view></router-view>
+      <v-row>
+        <v-col cols="4">
+          <SideMenu v-show="isAuthenticated" />
+        </v-col>
+        <v-col cols="8" md="10">
+          <v-container>
+            <v-row>
+              <SearchBar v-show="isAuthenticated" />
+            </v-row>
+            <v-row>
+              <v-col>
+                <router-view />
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-col>
+      </v-row>
     </v-main>
   </v-app>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-
+import SideMenu from '@/components/SideMenu'
+import SearchBar from './SearchBar.vue';
 export default {
   name: 'App',
-
-
   data: () => ({
   }),
 
+  components: {
+    SideMenu,
+    SearchBar
+  },
   computed: {
     ...mapGetters('auth', ['isAuthenticated']),
   },
