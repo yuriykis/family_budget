@@ -17,7 +17,7 @@
         </v-row>
         <v-row>
             <v-col cols="12">
-                <BudgetsList @editBudget="editBudgetDialog" />
+                <BudgetsList @editBudget="editBudgetDialog" @deleteBudget="deleteBudget" />
             </v-col>
         </v-row>
     </v-container>
@@ -30,7 +30,7 @@ export default {
     name: "Home",
     data: () => ({
         dialog: false,
-        budgetTitle: "Add New Budget"
+        budgetTitle: ""
     }),
     components: { BudgetsList, BudgetProps },
     methods: {
@@ -48,6 +48,10 @@ export default {
             this.setBudgetTitle("Edit Budget");
             this.dialog = true;
         },
+        deleteBudget() {
+            this.dialog = false;
+            console.log("delete budget");
+        }
     },
     computed: {
         budgetTitle() {
