@@ -8,9 +8,11 @@
         <v-col cols="8" md="10">
           <v-container>
             <v-row>
-              <SearchBar v-show="isAuthenticated" />
+              <v-col>
+                <SearchBar v-show="isAuthenticated" />
+              </v-col>
             </v-row>
-            <v-row>
+            <v-row class="ma-0">
               <v-col>
                 <router-view />
               </v-col>

@@ -13,7 +13,7 @@
                         </v-chip>
                     </v-list-item-action>
                     <v-list-item-action>
-                        <v-menu right offset-x=100 rounded>
+                        <v-menu right offset-x=10 rounded>
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn icon v-bind="attrs" v-on="on">
                                     <v-icon>mdi-dots-vertical</v-icon>
@@ -22,7 +22,11 @@
 
                             <v-list dense height="150px">
                                 <v-list-item v-for="(budgetAction, index) in budgetActions" :key="index">
-                                    <v-list-item-title>{{ budgetAction.title }}</v-list-item-title>
+                                    <v-list-item-title>
+                                        <v-btn @click="executeBudgetAction(budget, budgetAction)" plain>
+                                            {{ budgetAction.title }}
+                                        </v-btn>
+                                    </v-list-item-title>
                                 </v-list-item>
                             </v-list>
                         </v-menu>
@@ -39,8 +43,8 @@ export default {
     data: () => ({
         budgetActions: [
             { title: 'Edit', icon: 'mdi-pencil' },
-            { title: 'Delete', icon: 'mdi-delete' },
             { title: 'Share', icon: 'mdi-share' },
+            { title: 'Delete', icon: 'mdi-delete' },
         ],
         budgets: [
             {
@@ -147,6 +151,15 @@ export default {
     methods: {
         selectBudget(budget) {
             this.$emit('selectBudget', budget)
+        },
+        executeBudgetAction(budget, budgetAction) {
+            if (budgetAction.title === 'Edit') {
+                this.$emit('editBudget', budget)
+            } else if (budgetAction.title === 'Delete') {
+                this.$emit('deleteBudget', budget)
+            } else if (budgetAction.title === 'Share') {
+                this.$emit('shareBudget', budget)
+            }
         }
     }
 }
