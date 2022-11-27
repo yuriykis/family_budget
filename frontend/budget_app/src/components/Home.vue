@@ -12,7 +12,7 @@
                         Add New Budget
                     </v-btn>
                 </template>
-                <BudgetProps @on-close="closeDialog" :title="budgetTitle" />
+                <BudgetDialog @on-close="closeDialog" :title="budgetTitle" />
             </v-dialog>
         </v-row>
         <v-row>
@@ -25,14 +25,14 @@
 
 <script>
 import BudgetsList from './BudgetsList.vue';
-import BudgetProps from './BudgetProps.vue';
+import BudgetDialog from './BudgetDialog.vue';
 export default {
     name: "Home",
     data: () => ({
         dialog: false,
         budgetTitle: ""
     }),
-    components: { BudgetsList, BudgetProps },
+    components: { BudgetsList, BudgetDialog },
     methods: {
         setBudgetTitle(title) {
             this.budgetTitle = title;

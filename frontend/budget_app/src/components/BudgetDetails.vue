@@ -6,6 +6,11 @@
             </v-col>
         </v-row>
         <v-row>
+            <v-col cols="12">
+                <span>{{ budget.description }}</span>
+            </v-col>
+        </v-row>
+        <v-row>
             <v-col cols="4">
                 <v-card>
                     <v-card-title>
@@ -55,23 +60,30 @@
                 </v-card>
             </v-col>
         </v-row>
+        <v-row>
+            <v-col cols="12">
+                <TransationsList :budget="budget" />
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 
 <script>
+import TransationsList from './TransationsList.vue';
+
 export default {
     name: "BudgetDetails",
     data: () => ({
         budget: {
             name: "Budget 1",
-            description: "",
+            description: "klsdcnlwvmnerlkmvlwemc;lkwem",
             totalValue: 5000,
             valueLeft: 5000,
             totalTransactions: 0
         }
     }),
     components: {
-
+        TransationsList
     },
     methods: {
 
