@@ -47,7 +47,7 @@
         <template v-slot:append>
             <v-row justify="center" class="mb-5">
                 <v-col cols="12" class="text-center">
-                    <v-btn text>
+                    <v-btn text @click="logout">
                         <span>Logout</span>
                         <v-icon>mdi-logout-variant</v-icon>
                     </v-btn>
@@ -59,14 +59,20 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
     name: 'SideMenu',
     data: () => ({
     }),
     methods: {
+        ...mapActions('auth', ['logoutUser']),
         onMyDashboardClick() {
             this.$router.push({ name: 'Home' })
         },
+        logout() {
+            this.logoutUser()
+            this.$router.push({ name: 'Login' })
+        }
     }
 }
 </script>

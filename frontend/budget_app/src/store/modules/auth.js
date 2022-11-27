@@ -1,7 +1,8 @@
-import axios from 'axios'
+import { loginToTheApplication } from '../../services/api'
+import * as auth from '../api_auth'
 
 const state = {
-    isAuthorized: true,
+    isAuthorized: auth.ifValidToken(),
 }
 
 const getters = {
@@ -9,20 +10,27 @@ const getters = {
 }
 
 const actions = {
-    async login({ commit }, user) {
+    async loginUser({ commit }, userData) {
         try {
-            const response = await axios.post('/api/auth/login', user)
-            commit('setAuth', response.data)
+            const response = await loginToTheApplication(userData.username, userData.password)
+            commit('setAuth', await response.data)
         } catch (error) {
             console.log(error)
         }
+    },
+    logoutUser({ commit }) {
+        commit('removeAuth')
     }
 }
 
 const mutations = {
     setAuth(state, data) {
         state.isAuthorized = true
-        localStorage.setItem('user', JSON.stringify(data))
+        auth.setLocalStorage(data.access, data.refresh)
+    },
+    removeAuth(state) {
+        state.isAuthorized = false
+        auth.removeLocalStorage()
     }
 }
 
