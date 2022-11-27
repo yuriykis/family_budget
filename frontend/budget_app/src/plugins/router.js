@@ -29,6 +29,23 @@ const routes = [
             requiresAuth: false
         }
     },
+    {
+        path: '/register',
+        name: 'Register',
+        component: () => import('@/components/Register.vue'),
+        meta: {
+            requiresAuth: false
+        }
+    },
+    {
+        path: '/budget',
+        name: 'BudgetDetails',
+        component: () => import('@/components/BudgetDetails.vue'),
+        meta: {
+            requiresAuth: true
+        }
+    },
+
 ]
 
 const router = new VueRouter({
