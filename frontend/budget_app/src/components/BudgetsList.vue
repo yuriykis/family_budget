@@ -168,7 +168,7 @@ export default {
     }),
     methods: {
         selectBudget(budget) {
-            this.$emit('selectBudget', budget)
+            this.$router.push({ name: 'BudgetDetails', params: { id: budget.id } });
         },
         executeBudgetAction(budget, budgetAction) {
             if (budgetAction.title === 'Edit') {

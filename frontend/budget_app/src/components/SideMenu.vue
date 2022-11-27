@@ -30,7 +30,7 @@
                 </v-list-item-icon>
                 <v-list-item-title>Dashboard</v-list-item-title>
             </v-list-item>
-            <v-list-item link>
+            <v-list-item link @click="onMyDashboardClick">
                 <v-list-item-icon>
                     <v-icon>mdi-cash-multiple</v-icon>
                 </v-list-item-icon>
@@ -63,5 +63,10 @@ export default {
     name: 'SideMenu',
     data: () => ({
     }),
+    methods: {
+        onMyDashboardClick() {
+            this.$router.push({ name: 'Home' })
+        },
+    }
 }
 </script>
