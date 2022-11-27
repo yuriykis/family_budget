@@ -14,7 +14,12 @@
             </v-row>
             <v-row class="ma-0">
               <v-col>
-                <router-view />
+                <v-row justify="center" align="center" v-if="loading">
+                  <Loader />
+                </v-row>
+                <transition v-else name="fade">
+                  <router-view />
+                </transition>
               </v-col>
             </v-row>
           </v-container>
@@ -28,17 +33,37 @@
 import { mapGetters } from 'vuex'
 import SideMenu from '@/components/SideMenu'
 import SearchBar from './SearchBar.vue';
+import Loader from '@/components/Loader'
 export default {
   name: 'App',
   data: () => ({
+    loading: false
   }),
 
   components: {
     SideMenu,
-    SearchBar
+    SearchBar,
+    Loader
   },
   computed: {
     ...mapGetters('auth', ['isAuthenticated']),
   },
 };
 </script>
+
+<style>
+fade-enter-active,
+.fade-leave-active {
+  transition-property: opacity;
+  transition-duration: 0.25s;
+}
+
+.fade-enter-active {
+  transition-delay: 0.25s;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+</style>
