@@ -19,9 +19,7 @@ class BudgetView(GenericAPIView):
         try:
             self.logger.debug("Getting budget")
             # obtain budgets for request.user
-            budgets = UserBudget.objects.filter(user=request.user).select_related(
-                "budget"
-            )
+            budgets = Budget.objects.filter(userbudget__user=request.user)
             serializer = self.serializer_class(budgets, many=True)
             self.logger.debug("Budgets obtained")
             return Response(serializer.data, status=status.HTTP_200_OK)
