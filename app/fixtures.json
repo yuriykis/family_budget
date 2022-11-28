@@ -1,0 +1,250 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "username": "username1",
+            "password": "pbkdf2_sha256$320000$eUHgG3nm7rN7SXfhz6uvca$r8luoV+nubFiLxj/CLS/sV/J6RIGuauiNAfPWi/151U=",
+            "first_name": "John",
+            "last_name": "Smith",
+            "email": "email@example.com"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "username": "username2",
+            "password": "pbkdf2_sha256$320000$ciW7FsMUaggEq2u0xJZe9R$07GT9wCiHNWUCsUiO7e/YicHRdbANHa9IaNwdmSwmIs=",
+            "first_name": "Jane",
+            "last_name": "Smith",
+            "email": "email@example.com"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 3,
+        "fields": {
+            "username": "username3",
+            "password": "pbkdf2_sha256$320000$uRvkWjKhXjaWgaqUuo5akY$YkvEK6cmAeBt8odU5zi8/UnASzFHKh4LZ5OnRXnENGY=",
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "email@example.com"
+        }
+    },
+    {
+        "model": "budget_app.budget",
+        "pk": 1,
+        "fields": {
+            "name": "Budget 1",
+            "description": "Budget 1 description",
+            "amount": 1000,
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.budget",
+        "pk": 2,
+        "fields": {
+            "name": "Budget 2",
+            "description": "Budget 2 description",
+            "amount": 2000,
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.budget",
+        "pk": 3,
+        "fields": {
+            "name": "Budget 3",
+            "description": "Budget 3 description",
+            "amount": 3000,
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.budget",
+        "pk": 4,
+        "fields": {
+            "name": "Budget 4",
+            "description": "Budget 4 description",
+            "amount": 4000,
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.budget",
+        "pk": 5,
+        "fields": {
+            "name": "Budget 5",
+            "description": "Budget 5 description",
+            "amount": 5000,
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.userbudget",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "budget": 1,
+            "ownership": "True",
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.userbudget",
+        "pk": 2,
+        "fields": {
+            "user": 1,
+            "budget": 2,
+            "ownership": "True",
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.userbudget",
+        "pk": 3,
+        "fields": {
+            "user": 1,
+            "budget": 3,
+            "ownership": "False",
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.userbudget",
+        "pk": 4,
+        "fields": {
+            "user": 2,
+            "budget": 4,
+            "ownership": "True",
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.userbudget",
+        "pk": 5,
+        "fields": {
+            "user": 1,
+            "budget": 4,
+            "ownership": "False",
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.userbudget",
+        "pk": 6,
+        "fields": {
+            "user": 1,
+            "budget": 5,
+            "ownership": "False",
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.userbudget",
+        "pk": 7,
+        "fields": {
+            "user": 3,
+            "budget": 5,
+            "ownership": "True",
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.category",
+        "pk": 1,
+        "fields": {
+            "name": "Home",
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.category",
+        "pk": 2,
+        "fields": {
+            "name": "Work",
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.category",
+        "pk": 3,
+        "fields": {
+            "name": "Sport",
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.transaction",
+        "pk": 1,
+        "fields": {
+            "title": "Transaction 1",
+            "budget": 1,
+            "category": 1,
+            "amount": 100,
+            "type": "EXPENSE",
+            "datetime": "2019-01-01T00:00:00Z",
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.transaction",
+        "pk": 2,
+        "fields": {
+            "title": "Transaction 2",
+            "budget": 1,
+            "category": 1,
+            "amount": 100,
+            "type": "INCOME",
+            "datetime": "2019-01-01T00:00:00Z",
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.transaction",
+        "pk": 3,
+        "fields": {
+            "title": "Transaction 3",
+            "budget": 1,
+            "category": 2,
+            "amount": 1000,
+            "type": "EXPENSE",
+            "datetime": "2019-01-01T00:00:00Z",
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "budget_app.transaction",
+        "pk": 4,
+        "fields": {
+            "title": "Transaction 4",
+            "budget": 2,
+            "category": 3,
+            "amount": 123,
+            "type": "EXPENSE",
+            "datetime": "2019-01-01T00:00:00Z",
+            "created_at": "2019-01-01T00:00:00Z",
+            "updated_at": "2019-01-01T00:00:00Z"
+        }
+    }
+]

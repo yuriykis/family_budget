@@ -11,6 +11,9 @@ done
 echo "Collect static files"s
 python manage.py collectstatic --noinput
 
+echo "Load initial data"
+python manage.py loaddata fixtures.json
+
 # Start server
 echo "Starting server"
 gunicorn app.wsgi:application --bind :8000 --workers=10
