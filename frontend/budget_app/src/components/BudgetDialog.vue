@@ -15,6 +15,11 @@
                         <v-text-field v-model="description" label="Description" required></v-text-field>
                     </v-col>
                 </v-row>
+                <v-row>
+                    <v-col cols="12">
+                        <v-text-field v-model="amount" label="Amount" required></v-text-field>
+                    </v-col>
+                </v-row>
             </v-container>
         </v-card-text>
         <v-card-actions>
@@ -36,9 +41,9 @@ export default {
         }
     },
     data: () => ({
-
         name: "",
-        description: ""
+        description: "",
+        amount: 0
     }),
     methods: {
         addBudget() {
@@ -49,10 +54,11 @@ export default {
         },
         save() {
             this.dialog = false;
-            this.$emit("add-budget", {
+            this.$emit("budget-action", {
                 name: this.name,
-                description: this.description
-            });
+                description: this.description,
+                amount: this.amount
+            }, this.title);
         }
     }
 };

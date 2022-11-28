@@ -2,10 +2,10 @@
   <v-container>
     <v-row aling="center" justify="center">
       <v-col cols=" 12" sm="8" md="4">
-        <v-card v-if="loading" flat>
+        <v-overlay :value="loading">
           <Loader />
-        </v-card>
-        <v-card v-else class="elevation-12">
+        </v-overlay>
+        <v-card v-if="!loading" class="elevation-12">
           <v-toolbar dark flat>
             <v-spacer />
             <v-toolbar-title>FamilyBudget</v-toolbar-title>

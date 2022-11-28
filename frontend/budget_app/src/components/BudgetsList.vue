@@ -23,6 +23,10 @@
                         <v-list-item-title>{{ budget.name }}</v-list-item-title>
                         <v-list-item-subtitle>{{ budget.description }}</v-list-item-subtitle>
                     </v-list-item-content>
+                    <v-list-item-content>
+                        <v-list-item-title>Amount</v-list-item-title>
+                        <v-list-item-subtitle>{{ budget.amount }}</v-list-item-subtitle>
+                    </v-list-item-content>
                     <v-list-item-action>
                         <v-menu right offset-x rounded>
                             <template v-slot:activator="{ on, attrs }">
@@ -63,13 +67,13 @@ export default {
 
     }),
     async created() {
-        await this.getBudgets()
+        await this.getBudgetsAction()
     },
     methods: {
         ...mapGetters('budgets', ['budgets']),
-        ...mapActions('budgets', ['getBudgets']),
+        ...mapActions('budgets', ['getBudgetsAction']),
         selectBudget(budget) {
-            this.$router.push({ name: 'BudgetDetails', params: { id: budget.id } });
+            this.$router.push({ path: `/budget/${budget.id}` });
         },
         executeBudgetAction(budget, budgetAction) {
             if (budgetAction.title === 'Edit') {

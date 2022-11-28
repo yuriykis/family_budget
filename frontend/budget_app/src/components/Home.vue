@@ -1,5 +1,8 @@
 <template>
     <v-container>
+        <v-overlay :value="loading">
+            <Loader />
+        </v-overlay>
         <v-row>
             <v-col cols="12">
                 <div id="my_budget">My Budgets</div>
@@ -8,16 +11,19 @@
         <v-row justify="end" class="ma-0">
             <v-dialog v-model="dialog" width="500">
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn dark class="white--text" @click="addBudget" v-bind="attrs" v-on="on">
+                    <v-btn dark class="white--text" @click="addBudgetDialog" v-bind="attrs" v-on="on">
                         Add New Budget
                     </v-btn>
                 </template>
-                <BudgetDialog @on-close="closeDialog" :title="budgetTitle" />
+                <BudgetDialog @on-close="closeDialog"
+                    @budget-action="(budget, action_title) => executeBudgetAction(budget, action_title)"
+                    :title="budgetTitle" />
             </v-dialog>
         </v-row>
         <v-row>
             <v-col cols="12">
-                <BudgetsList @editBudget="editBudgetDialog" @deleteBudget="deleteBudget" />
+                <BudgetsList @editBudget="(budget) => editBudgetDialog(budget)"
+                    @deleteBudget="(budget) => deleteBudget(budget)" />
             </v-col>
         </v-row>
     </v-container>
@@ -26,31 +32,58 @@
 <script>
 import BudgetsList from './BudgetsList.vue';
 import BudgetDialog from './BudgetDialog.vue';
+import Loader from '@/components/Loader'
+import { mapActions } from 'vuex';
 export default {
     name: "Home",
     data: () => ({
         dialog: false,
-        budgetTitle: ""
+        budgetTitle: "",
+        loading: false,
+        selectedBudget: {}
     }),
-    components: { BudgetsList, BudgetDialog },
+    components: { BudgetsList, BudgetDialog, Loader },
     methods: {
+        ...mapActions('budgets', ['addBudgetAction', 'editBudgetAction', 'deleteBudgetAction']),
         setBudgetTitle(title) {
             this.budgetTitle = title;
         },
-        addBudget() {
+        addBudgetDialog() {
             this.setBudgetTitle("Add New Budget");
             this.dialog = true;
         },
         closeDialog() {
             this.dialog = false;
         },
-        editBudgetDialog() {
+        editBudgetDialog(budget) {
+            this.selectedBudget = budget;
             this.setBudgetTitle("Edit Budget");
             this.dialog = true;
         },
-        deleteBudget() {
+        async deleteBudget(budget) {
             this.dialog = false;
-            console.log("delete budget");
+            this.loading = true;
+            await this.deleteBudgetAction(budget.id);
+            this.loading = false;
+        },
+        async executeBudgetAction(budget, action_title) {
+            this.loading = true;
+            switch (action_title) {
+                case "Add New Budget":
+                    await this.addBudgetAction(budget);
+                    this.loading = false;
+                    this.dialog = false;
+                    break;
+                case "Edit Budget":
+                    budget.id = this.selectedBudget.id;
+                    this.editBudgetAction(budget);
+                    this.loading = false;
+                    this.dialog = false;
+                    break;
+                default:
+                    this.loading = false;
+                    this.dialog = false;
+            }
         }
     },
     computed: {

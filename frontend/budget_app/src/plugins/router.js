@@ -38,7 +38,7 @@ const routes = [
         }
     },
     {
-        path: '/budget',
+        path: '/budget/:budgetId',
         name: 'BudgetDetails',
         component: () => import('@/components/BudgetDetails.vue'),
         meta: {

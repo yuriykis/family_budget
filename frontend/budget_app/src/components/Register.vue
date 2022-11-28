@@ -2,10 +2,10 @@
     <v-container>
         <v-row align="center" justify="center">
             <v-col md="12" lg="6" align="center" justify="center">
-                <v-card v-if="loading" flat>
+                <v-overlay :value="loading">
                     <Loader />
-                </v-card>
-                <v-card v-else>
+                </v-overlay>
+                <v-card v-if="!loading">
                     <v-toolbar dark flat>
                         <v-spacer />
                         <v-toolbar-title>Register in FamilyBudget App!</v-toolbar-title>
