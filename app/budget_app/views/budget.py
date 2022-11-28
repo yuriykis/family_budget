@@ -135,9 +135,7 @@ class ShareBudgetView(GenericAPIView):
             )
             user = User.objects.get(id=request.data["user_id"])
             # check if user is already sharing budget
-            if UserBudget.objects.filter(
-                user=user, budget=budget_id, ownership=False
-            ).exists():
+            if UserBudget.objects.filter(user=user, budget=budget_id).exists():
                 self.logger.error("User %s is already sharing budget", user.id)
                 return Response(
                     {"message": "User is already sharing budget"},
