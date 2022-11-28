@@ -2,7 +2,7 @@ from .base import *
 
 STAGE_NAME = "production"
 
-DEBUG = False
+DEBUG = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -10,8 +10,9 @@ DEBUG = False
 STATIC_URL = "/production/static/"
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
+CORS_ALLOWED_ORIGINS = ["http://localhost"]
 
 CORS_ALLOW_ALL_ORIGINS = True
 

@@ -1,7 +1,7 @@
 import * as Axios from 'axios'
 import { getAccessToken } from '../store/api_auth'
 
-var apiHost = 'https://future_budget_app.com'
+var apiHost = 'http://localhost:52000'
 
 if (process.env.NODE_ENV === 'development') {
     apiHost = 'http://localhost:8000'

@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    expose:
+      - "5432"
+    volumes:
+      - ./run/data/postgres:/var/lib/postgresql/data
+      - ./run/etc/db_password:/run/db_password
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD_FILE=/run/db_password
+      - PGDATA=/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: backend
+    expose:
+      - "8000"
+    environment:
+      - DB_HOST=postgres
+      - DB_NAME=postgres
+      - DJANGO_SETTINGS_MODULE=app.settings.production
+    env_file:
+      - ./run/etc/envfile.env
+    command: [ "gunicorn", "app.wsgi:application", "--bind", ":8000" ]
+    restart: always
+    depends_on:
+      - postgres
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    ports:
+      - "52000:80"
+    depends_on:
+      - app
+    volumes:
+      - ./frontend/budget_app/dist:/static
+      - ./gate/nginx:/etc/nginx/conf.d
+    restart: always
