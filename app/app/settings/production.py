@@ -2,7 +2,7 @@ from .base import *
 
 STAGE_NAME = "production"
 
-DEBUG = True
+DEBUG = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
