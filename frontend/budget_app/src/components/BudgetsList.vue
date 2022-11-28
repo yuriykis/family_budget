@@ -28,6 +28,14 @@
                         <v-list-item-subtitle>{{ budget.amount }}</v-list-item-subtitle>
                     </v-list-item-content>
                     <v-list-item-action>
+                        <v-chip v-if="budget.ownership" color="green">
+                            Owner
+                        </v-chip>
+                        <v-chip v-else color="yellow">
+                            Shared
+                        </v-chip>
+                    </v-list-item-action>
+                    <v-list-item-action>
                         <v-menu right offset-x rounded>
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn icon v-bind="attrs" v-on="on">
@@ -38,7 +46,8 @@
                             <v-list dense height="150px">
                                 <v-list-item v-for="(budgetAction, index) in budgetActions" :key="index">
                                     <v-list-item-title>
-                                        <v-btn @click="executeBudgetAction(budget, budgetAction)" plain>
+                                        <v-btn @click="executeBudgetAction(budget, budgetAction)" plain
+                                            :disabled="!budget.ownership">
                                             {{ budgetAction.title }}
                                         </v-btn>
                                     </v-list-item-title>

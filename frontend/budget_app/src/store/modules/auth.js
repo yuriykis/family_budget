@@ -1,12 +1,14 @@
-import { loginToTheApplication } from '../../services/api'
+import { loginToTheApplication, getMyUser } from '../../services/api'
 import * as auth from '../api_auth'
 
 const state = {
     isAuthorized: auth.ifValidToken(),
+    userData: {},
 }
 
 const getters = {
     isAuthenticated: state => state.isAuthorized,
+    userData: state => state.userData,
 }
 
 const actions = {
@@ -20,6 +22,14 @@ const actions = {
     },
     logoutUser({ commit }) {
         commit('removeAuth')
+    },
+    async getMyUserAction({ commit }) {
+        try {
+            const response = await getMyUser()
+            commit('setUserData', await response.data)
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
 
@@ -31,6 +41,9 @@ const mutations = {
     removeAuth(state) {
         state.isAuthorized = false
         auth.removeLocalStorage()
+    },
+    setUserData(state, data) {
+        state.userData = data
     }
 }
 

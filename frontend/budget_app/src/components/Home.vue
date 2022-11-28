@@ -3,6 +3,10 @@
         <v-overlay :value="loading">
             <Loader />
         </v-overlay>
+        <v-dialog v-model="shareBudgetDialog" max-width="400">
+            <ShareBudgetDialog @share-budget="(selectedUser) => shareBudget(selectedUser)"
+                @on-close="shareBudgetDialog = false" />
+        </v-dialog>
         <v-row>
             <v-col cols="12">
                 <div id="my_budget">My Budgets</div>
@@ -15,7 +19,7 @@
                         Add New Budget
                     </v-btn>
                 </template>
-                <BudgetDialog @on-close="closeDialog"
+                <BudgetDialog @on-close="dialog = false"
                     @budget-action="(budget, action_title) => executeBudgetAction(budget, action_title)"
                     :title="budgetTitle" />
             </v-dialog>
@@ -23,7 +27,8 @@
         <v-row>
             <v-col cols="12">
                 <BudgetsList @editBudget="(budget) => editBudgetDialog(budget)"
-                    @deleteBudget="(budget) => deleteBudget(budget)" />
+                    @deleteBudget="(budget) => deleteBudget(budget)"
+                    @shareBudget="(budget) => openShareBudgetDialog(budget)" />
             </v-col>
         </v-row>
     </v-container>
@@ -34,15 +39,21 @@ import BudgetsList from './BudgetsList.vue';
 import BudgetDialog from './BudgetDialog.vue';
 import Loader from '@/components/Loader'
 import { mapActions } from 'vuex';
+import { shareBudget } from '../services/api';
+import ShareBudgetDialog from './ShareBudgetDialog.vue';
 export default {
     name: "Home",
     data: () => ({
         dialog: false,
         budgetTitle: "",
         loading: false,
-        selectedBudget: {}
+        selectedBudget: {},
+        shareBudgetDialog: false,
     }),
-    components: { BudgetsList, BudgetDialog, Loader },
+    components: {
+        BudgetsList, BudgetDialog, Loader,
+        ShareBudgetDialog
+    },
     methods: {
         ...mapActions('budgets', ['addBudgetAction', 'editBudgetAction', 'deleteBudgetAction']),
         setBudgetTitle(title) {
@@ -52,18 +63,34 @@ export default {
             this.setBudgetTitle("Add New Budget");
             this.dialog = true;
         },
-        closeDialog() {
-            this.dialog = false;
-        },
         editBudgetDialog(budget) {
             this.selectedBudget = budget;
             this.setBudgetTitle("Edit Budget");
             this.dialog = true;
         },
+
         async deleteBudget(budget) {
             this.dialog = false;
             this.loading = true;
-            await this.deleteBudgetAction(budget.id);
+            try {
+                await this.deleteBudgetAction(budget.width);
+            } catch (error) {
+                console.log(error);
+            }
+            this.loading = false;
+        },
+        openShareBudgetDialog(budget) {
+            this.selectedBudget = budget;
+            this.shareBudgetDialog = true;
+        },
+        async shareBudget(selectedUser) {
+            this.shareBudgetDialog = false;
+            this.loading = true;
+            try {
+                await shareBudget(this.selectedBudget.id, selectedUser.user.id);
+            } catch (error) {
+                console.log(error);
+            }
             this.loading = false;
         },
         async executeBudgetAction(budget, action_title) {

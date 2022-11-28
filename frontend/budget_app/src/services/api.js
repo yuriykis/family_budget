@@ -64,3 +64,19 @@ export async function createCategory(category) {
 export async function getCategories() {
     return api.get('/app/category/', { headers: authenticationHeader() })
 }
+
+export async function getMyUser() {
+    return api.get('/app/user/', { headers: authenticationHeader() })
+}
+
+export async function getUser(userId) {
+    return api.get(`/app/user/${userId}/`, { headers: authenticationHeader() })
+}
+
+export async function getAllUsers() {
+    return api.get('/app/users/', { headers: authenticationHeader() })
+}
+
+export async function shareBudget(budgetId, userId) {
+    return api.post(`/app/budget/${budgetId}/share/`, { user_id: userId }, { headers: authenticationHeader() })
+}

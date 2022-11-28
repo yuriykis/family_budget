@@ -66,7 +66,7 @@
         <v-row justify="end" class="mt-5">
             <v-dialog v-model="dialog" width="500">
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn dark class="white--text" v-bind="attrs" v-on="on">
+                    <v-btn dark class="white--text" v-bind="attrs" v-on="on" :disabled="!budget.ownership">
                         New transaction
                     </v-btn>
                 </template>

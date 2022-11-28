@@ -4,6 +4,7 @@ import auth from './modules/auth'
 import budgets from './modules/budgets'
 import transactions from './modules/transactions'
 import categories from './modules/categories'
+import users from './modules/users'
 
 Vue.use(Vuex)
 
@@ -14,7 +15,8 @@ export default new Vuex.Store({
         auth,
         budgets,
         transactions,
-        categories
+        categories,
+        users
     },
     strict: debug
 })

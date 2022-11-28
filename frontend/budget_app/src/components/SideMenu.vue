@@ -13,10 +13,14 @@
 
             <v-list-item>
                 <v-list-item-content>
-                    <v-list-item-title class="text-h6">
-                        Name Surname
-                    </v-list-item-title>
-                    <v-list-item-subtitle>name.surname@gmail.com</v-list-item-subtitle>
+                    <v-row justify="center">
+                        <v-col cols="12" class="text-center">
+                            <v-list-item-title class="text-h6">
+                                {{ userData.first_name }} {{ userData.last_name }}
+                            </v-list-item-title>
+                            <v-list-item-subtitle>{{ userData.email }}</v-list-item-subtitle>
+                        </v-col>
+                    </v-row>
                 </v-list-item-content>
             </v-list-item>
         </v-list>
@@ -60,12 +64,16 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
     name: 'SideMenu',
     data: () => ({
     }),
+    computed: {
+        ...mapGetters('auth', ['userData'])
+    },
     methods: {
-        ...mapActions('auth', ['logoutUser']),
+        ...mapActions('auth', ['logoutUser', 'getMyUserAction']),
         onMyDashboardClick() {
             this.$router.push({ name: 'Home' })
         },
@@ -73,6 +81,9 @@ export default {
             this.logoutUser()
             this.$router.push({ name: 'Login' })
         }
+    },
+    async mounted() {
+        await this.getMyUserAction()
     }
 }
 </script>
