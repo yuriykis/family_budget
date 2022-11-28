@@ -18,5 +18,6 @@ export const removeLocalStorage = () => {
 }
 
 export function ifValidToken() {
+    // TODO: check if token is valid
     return getAccessToken() !== null
 }
