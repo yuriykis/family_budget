@@ -55,3 +55,17 @@ DB_PORT=5432
 
 `docker compose up`
 
+The application should available on `http://localhost:52000`
+
+#### Login to the app
+
+The application contains initial data with which you can log in.
+There are three example users:
+
+`username1:password1`
+
+`username2:password2`
+
+`username3:password3`
+
+Of course, you can also create your own account and use it to log in.
