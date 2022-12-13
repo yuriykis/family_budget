@@ -1,6 +1,7 @@
 package apiserver
 
 import (
+	"app/internal/app/store"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -10,12 +11,14 @@ import (
 type server struct {
 	router *gin.Engine
 	logger *log.Logger
+	store  store.IStore
 }
 
-func newServer() *server {
+func newServer(store store.IStore) *server {
 	s := &server{
 		router: gin.Default(),
 		logger: log.New(),
+		store:  store,
 	}
 	s.configureRouter()
 	return s

@@ -1,17 +1,20 @@
 package sqlstore
 
-import "database/sql"
+import (
+	"app/internal/app/store"
+	"database/sql"
+)
 
 type Store struct {
 	db             *sql.DB
-	userRepository *UserRepository
+	userRepository store.IUserRepository
 }
 
 func New(db *sql.DB) *Store {
 	return &Store{db: db}
 }
 
-func (s *Store) User() *UserRepository {
+func (s *Store) User() store.IUserRepository {
 	if s.userRepository != nil {
 		return s.userRepository
 	}

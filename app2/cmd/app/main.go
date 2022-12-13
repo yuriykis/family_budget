@@ -2,16 +2,25 @@ package main
 
 import (
 	"app/internal/app/apiserver"
+	"flag"
 
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v2"
 )
 
-const defaultConfigPath = "configs/server.yml"
+var configPath = "configs/server.yml"
+
+func init() {
+	flag.StringVar(&configPath, "config-path", configPath, "path to config file")
+}
 
 func main() {
 	config := apiserver.NewConfig()
-	_, err := yaml.Marshal(defaultConfigPath)
+	v, err := yaml.Marshal(configPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = yaml.Unmarshal(v, config)
 	if err != nil {
 		log.Fatal(err)
 	}

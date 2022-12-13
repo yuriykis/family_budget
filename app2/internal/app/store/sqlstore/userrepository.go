@@ -1,6 +1,8 @@
 package sqlstore
 
-import "app/internal/app/model"
+import (
+	"app/internal/app/model"
+)
 
 type UserRepository struct {
 	store *Store
