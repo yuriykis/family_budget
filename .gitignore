@@ -110,3 +110,4 @@ static_collected
 .vscode/
 run/
 *bin/
+app2/aliases
