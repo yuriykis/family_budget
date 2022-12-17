@@ -25,6 +25,7 @@ func newDB(databaseURL string) (*sql.DB, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	if err := db.Ping(); err != nil {
 		return nil, err
 	}

@@ -3,5 +3,6 @@ package store
 import "app/internal/app/model"
 
 type IUserRepository interface {
-	Create(model.User) error
+	Create(model.User) (int, error)
+	AuthCheck(string, string) (string, error)
 }
