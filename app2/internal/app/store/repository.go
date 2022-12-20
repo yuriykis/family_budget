@@ -7,3 +7,7 @@ type IUserRepository interface {
 	Find(int) (*model.User, error)
 	AuthCheck(string, string) (string, error)
 }
+
+type IBudgetRepository interface {
+	Create(model.Budget) (int, error)
+}

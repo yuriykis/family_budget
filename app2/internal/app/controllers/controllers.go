@@ -11,3 +11,7 @@ type IUserController interface {
 type IServiceController interface {
 	CheckHealth(c *gin.Context)
 }
+
+type IBudgetController interface {
+	CreateBudget(c *gin.Context)
+}

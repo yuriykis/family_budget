@@ -11,3 +11,9 @@ type AuthRequest struct {
 	Email    string `json:"email" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
+
+type CreateBudgetRequest struct {
+	Name        string  `json:"name" binding:"required"`
+	Description string  `json:"description" binding:"required"`
+	Amount      float64 `json:"amount" binding:"required"`
+}

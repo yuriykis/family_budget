@@ -18,6 +18,7 @@ type server struct {
 	logger            *log.Logger
 	userController    controllers.IUserController
 	serviceController controllers.IServiceController
+	budgetController  controllers.IBudgetController
 }
 
 func newServer(store store.IStore) *server {
@@ -26,6 +27,7 @@ func newServer(store store.IStore) *server {
 		logger:            log.New(),
 		userController:    controller.NewsUserController(store),
 		serviceController: controller.NewServiceController(),
+		budgetController:  controller.NewBudgetController(store),
 	}
 	s.configureRouter()
 	return s
@@ -41,6 +43,7 @@ func (s *server) configureRouter() {
 	protected := s.router.Group("/api/auth")
 	protected.Use(middlewares.JwtMiddleware())
 	protected.GET("/user", s.userController.GetUser)
+	protected.POST("/budget", s.budgetController.CreateBudget)
 }
 
 func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
