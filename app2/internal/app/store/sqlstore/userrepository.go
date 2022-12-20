@@ -58,3 +58,20 @@ func (r *UserRepository) AuthCheck(email string, password string) (string, error
 
 	return token, nil
 }
+
+func (r *UserRepository) Find(id int) (*model.User, error) {
+	u := &model.User{}
+	if err := r.store.db.QueryRow(
+		"SELECT id, first_name, last_name, email FROM users WHERE id = $1",
+		id,
+	).Scan(
+		&u.ID,
+		&u.FirstName,
+		&u.LastName,
+		&u.Email,
+	); err != nil {
+		return nil, err
+	}
+
+	return u, nil
+}

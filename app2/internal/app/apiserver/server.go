@@ -3,6 +3,7 @@ package apiserver
 import (
 	"app/internal/app/controllers"
 	"app/internal/app/controllers/controller"
+	"app/internal/app/middlewares"
 	"app/internal/app/store"
 
 	"net/http"
@@ -31,25 +32,19 @@ func newServer(store store.IStore) *server {
 }
 
 func (s *server) configureRouter() {
-	s.router.GET("/api/healthcheck", s.handleHealthcheck())
-	s.router.POST("/api/register", s.handleRegister())
-	s.router.POST("/api/auth", s.handleAuth())
+
+	public := s.router.Group("/api")
+	public.GET("/healthcheck", s.serviceController.CheckHealth)
+	public.POST("/register", s.userController.RegisterUser)
+	public.POST("/login", s.userController.AthenticateUser)
+
+	protected := s.router.Group("/api/auth")
+	protected.Use(middlewares.JwtMiddleware())
+	protected.GET("/user", s.userController.GetUser)
 }
 
 func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	s.router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{"*"}}))
 	s.router.ServeHTTP(w, r)
-}
-
-func (s *server) handleHealthcheck() gin.HandlerFunc {
-	return s.serviceController.CheckHealth
-}
-
-func (s *server) handleRegister() gin.HandlerFunc {
-	return s.userController.RegisterUser
-}
-
-func (s *server) handleAuth() gin.HandlerFunc {
-	return s.userController.AthenticateUser
 }

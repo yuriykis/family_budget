@@ -4,6 +4,7 @@ import (
 	"app/internal/app/controllers"
 	"app/internal/app/model"
 	"app/internal/app/store"
+	"app/internal/app/utils/token"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -58,4 +59,18 @@ func (uc *UserController) AthenticateUser(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"token": token})
+}
+
+func (uc *UserController) GetUser(c *gin.Context) {
+	id, err := token.ExtractTokenID(c)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	user, err := uc.store.User().Find(int(id))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, user)
 }
