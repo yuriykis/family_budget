@@ -10,4 +10,6 @@ type IUserRepository interface {
 
 type IBudgetRepository interface {
 	Create(model.Budget) (int, error)
+	FindAll() ([]model.Budget, error)
+	Find(int) (*model.Budget, error)
 }

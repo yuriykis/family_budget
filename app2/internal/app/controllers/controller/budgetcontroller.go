@@ -5,6 +5,7 @@ import (
 	"app/internal/app/model"
 	"app/internal/app/store"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -35,4 +36,28 @@ func (bc *BudgetController) CreateBudget(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, gin.H{"id": id})
+}
+
+func (bc *BudgetController) GetBudgetByID(c *gin.Context) {
+	id := c.Param("budget_id")
+	id_int, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	budget, err := bc.store.Budget().Find(id_int)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, budget)
+}
+
+func (bc *BudgetController) GetAllBudgets(c *gin.Context) {
+	budgets, err := bc.store.Budget().FindAll()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, budgets)
 }

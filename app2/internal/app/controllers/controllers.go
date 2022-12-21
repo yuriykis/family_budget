@@ -6,6 +6,7 @@ type IUserController interface {
 	RegisterUser(c *gin.Context)
 	AthenticateUser(c *gin.Context)
 	GetUser(c *gin.Context)
+	GetUserByID(c *gin.Context)
 }
 
 type IServiceController interface {
@@ -14,4 +15,6 @@ type IServiceController interface {
 
 type IBudgetController interface {
 	CreateBudget(c *gin.Context)
+	GetAllBudgets(c *gin.Context)
+	GetBudgetByID(c *gin.Context)
 }

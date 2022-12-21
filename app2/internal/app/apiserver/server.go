@@ -43,7 +43,10 @@ func (s *server) configureRouter() {
 	protected := s.router.Group("/api/auth")
 	protected.Use(middlewares.JwtMiddleware())
 	protected.GET("/user", s.userController.GetUser)
+	protected.GET("/user/:user_id", s.userController.GetUserByID)
 	protected.POST("/budget", s.budgetController.CreateBudget)
+	protected.GET("/budget", s.budgetController.GetAllBudgets)
+	protected.GET("/budget/:budget_id", s.budgetController.GetBudgetByID)
 }
 
 func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {

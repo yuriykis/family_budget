@@ -6,6 +6,7 @@ import (
 	"app/internal/app/store"
 	"app/internal/app/utils/token"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -70,6 +71,21 @@ func (uc *UserController) GetUser(c *gin.Context) {
 	user, err := uc.store.User().Find(int(id))
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, user)
+}
+
+func (uc *UserController) GetUserByID(c *gin.Context) {
+	id := c.Param("user_id")
+	id_int, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	user, err := uc.store.User().Find(id_int)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, user)
