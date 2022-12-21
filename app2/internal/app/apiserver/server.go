@@ -14,20 +14,22 @@ import (
 )
 
 type server struct {
-	router            *gin.Engine
-	logger            *log.Logger
-	userController    controllers.IUserController
-	serviceController controllers.IServiceController
-	budgetController  controllers.IBudgetController
+	router             *gin.Engine
+	logger             *log.Logger
+	userController     controllers.IUserController
+	serviceController  controllers.IServiceController
+	budgetController   controllers.IBudgetController
+	categoryController controllers.ICategoryController
 }
 
 func newServer(store store.IStore) *server {
 	s := &server{
-		router:            gin.Default(),
-		logger:            log.New(),
-		userController:    controller.NewsUserController(store),
-		serviceController: controller.NewServiceController(),
-		budgetController:  controller.NewBudgetController(store),
+		router:             gin.Default(),
+		logger:             log.New(),
+		userController:     controller.NewsUserController(store),
+		serviceController:  controller.NewServiceController(),
+		budgetController:   controller.NewBudgetController(store),
+		categoryController: controller.NewCategoryController(store),
 	}
 	s.configureRouter()
 	return s
@@ -44,9 +46,12 @@ func (s *server) configureRouter() {
 	protected.Use(middlewares.JwtMiddleware())
 	protected.GET("/user", s.userController.GetUser)
 	protected.GET("/user/:user_id", s.userController.GetUserByID)
+
 	protected.POST("/budget", s.budgetController.CreateBudget)
 	protected.GET("/budget", s.budgetController.GetAllBudgets)
 	protected.GET("/budget/:budget_id", s.budgetController.GetBudgetByID)
+
+	protected.POST("/category", s.categoryController.CreateCategory)
 }
 
 func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {

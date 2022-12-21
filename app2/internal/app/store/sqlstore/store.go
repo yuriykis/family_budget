@@ -6,9 +6,10 @@ import (
 )
 
 type Store struct {
-	db               *sql.DB
-	userRepository   store.IUserRepository
-	budgetRepository store.IBudgetRepository
+	db                 *sql.DB
+	userRepository     store.IUserRepository
+	budgetRepository   store.IBudgetRepository
+	categoryRepository store.ICategoryRepository
 }
 
 func New(db *sql.DB) *Store {
@@ -37,4 +38,16 @@ func (s *Store) Budget() store.IBudgetRepository {
 	}
 
 	return s.budgetRepository
+}
+
+func (s *Store) Category() store.ICategoryRepository {
+	if s.categoryRepository != nil {
+		return s.categoryRepository
+	}
+
+	s.categoryRepository = &CategoryRepository{
+		store: s,
+	}
+
+	return s.categoryRepository
 }

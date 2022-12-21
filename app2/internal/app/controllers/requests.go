@@ -17,3 +17,8 @@ type CreateBudgetRequest struct {
 	Description string  `json:"description" binding:"required"`
 	Amount      float64 `json:"amount" binding:"required"`
 }
+
+type CreateCategoryRequest struct {
+	Name        string `json:"name" binding:"required"`
+	Description string `json:"description" binding:"required"`
+}

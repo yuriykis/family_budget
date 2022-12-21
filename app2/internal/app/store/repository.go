@@ -13,3 +13,9 @@ type IBudgetRepository interface {
 	FindAll() ([]model.Budget, error)
 	Find(int) (*model.Budget, error)
 }
+
+type ICategoryRepository interface {
+	Create(model.Category) (int, error)
+	FindAll() ([]model.Category, error)
+	Find(int) (*model.Category, error)
+}

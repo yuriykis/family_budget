@@ -18,3 +18,7 @@ type IBudgetController interface {
 	GetAllBudgets(c *gin.Context)
 	GetBudgetByID(c *gin.Context)
 }
+
+type ICategoryController interface {
+	CreateCategory(c *gin.Context)
+}
