@@ -1,4 +1,4 @@
-package controllers
+package requests
 
 type RegisterUserRequest struct {
 	FirstName string `json:"first_name" binding:"required"`

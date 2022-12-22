@@ -1,8 +1,8 @@
 package apiserver
 
 import (
-	"app/internal/app/controllers"
-	"app/internal/app/controllers/controller"
+	"app/internal/app/handlers"
+	"app/internal/app/handlers/handler"
 	"app/internal/app/middlewares"
 	"app/internal/app/store"
 
@@ -14,22 +14,22 @@ import (
 )
 
 type server struct {
-	router             *gin.Engine
-	logger             *log.Logger
-	userController     controllers.IUserController
-	serviceController  controllers.IServiceController
-	budgetController   controllers.IBudgetController
-	categoryController controllers.ICategoryController
+	router          *gin.Engine
+	logger          *log.Logger
+	userHandler     handlers.IUserHandler
+	serviceHandler  handlers.IServiceHandler
+	budgetHandler   handlers.IBudgetHandler
+	categoryHandler handlers.ICategoryHandler
 }
 
 func newServer(store store.IStore) *server {
 	s := &server{
-		router:             gin.Default(),
-		logger:             log.New(),
-		userController:     controller.NewsUserController(store),
-		serviceController:  controller.NewServiceController(),
-		budgetController:   controller.NewBudgetController(store),
-		categoryController: controller.NewCategoryController(store),
+		router:          gin.Default(),
+		logger:          log.New(),
+		userHandler:     handler.NewsUserHandler(store),
+		serviceHandler:  handler.NewServiceHandler(),
+		budgetHandler:   handler.NewBudgetHandler(store),
+		categoryHandler: handler.NewCategoryHandler(store),
 	}
 	s.configureRouter()
 	return s
@@ -38,20 +38,20 @@ func newServer(store store.IStore) *server {
 func (s *server) configureRouter() {
 
 	public := s.router.Group("/api")
-	public.GET("/healthcheck", s.serviceController.CheckHealth)
-	public.POST("/register", s.userController.RegisterUser)
-	public.POST("/login", s.userController.AthenticateUser)
+	public.GET("/healthcheck", s.serviceHandler.CheckHealth)
+	public.POST("/register", s.userHandler.RegisterUser)
+	public.POST("/login", s.userHandler.AthenticateUser)
 
 	protected := s.router.Group("/api/auth")
 	protected.Use(middlewares.JwtMiddleware())
-	protected.GET("/user", s.userController.GetUser)
-	protected.GET("/user/:user_id", s.userController.GetUserByID)
+	protected.GET("/user", s.userHandler.GetUser)
+	protected.GET("/user/:user_id", s.userHandler.GetUserByID)
 
-	protected.POST("/budget", s.budgetController.CreateBudget)
-	protected.GET("/budget", s.budgetController.GetAllBudgets)
-	protected.GET("/budget/:budget_id", s.budgetController.GetBudgetByID)
+	protected.POST("/budget", s.budgetHandler.CreateBudget)
+	protected.GET("/budget", s.budgetHandler.GetAllBudgets)
+	protected.GET("/budget/:budget_id", s.budgetHandler.GetBudgetByID)
 
-	protected.POST("/category", s.categoryController.CreateCategory)
+	protected.POST("/category", s.categoryHandler.CreateCategory)
 }
 
 func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {

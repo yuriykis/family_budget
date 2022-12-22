@@ -1,7 +1,7 @@
-package controller
+package handler
 
 import (
-	"app/internal/app/controllers"
+	"app/internal/app/handlers/requests"
 	"app/internal/app/model"
 	"app/internal/app/store"
 	"net/http"
@@ -9,16 +9,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type CategoryController struct {
+type CategoryHandler struct {
 	store store.IStore
 }
 
-func NewCategoryController(store store.IStore) *CategoryController {
-	return &CategoryController{store: store}
+func NewCategoryHandler(store store.IStore) *CategoryHandler {
+	return &CategoryHandler{store: store}
 }
 
-func (cc *CategoryController) CreateCategory(c *gin.Context) {
-	var req controllers.CreateCategoryRequest
+func (cc *CategoryHandler) CreateCategory(c *gin.Context) {
+	var req requests.CreateCategoryRequest
 	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

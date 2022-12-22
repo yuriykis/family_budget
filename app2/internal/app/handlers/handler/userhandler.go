@@ -1,7 +1,7 @@
-package controller
+package handler
 
 import (
-	"app/internal/app/controllers"
+	"app/internal/app/handlers/requests"
 	"app/internal/app/model"
 	"app/internal/app/store"
 	"app/internal/app/utils/token"
@@ -11,16 +11,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type UserController struct {
+type UserHandler struct {
 	store store.IStore
 }
 
-func NewsUserController(store store.IStore) *UserController {
-	return &UserController{store: store}
+func NewsUserHandler(store store.IStore) *UserHandler {
+	return &UserHandler{store: store}
 }
 
-func (uc *UserController) RegisterUser(c *gin.Context) {
-	var req controllers.RegisterUserRequest
+func (uc *UserHandler) RegisterUser(c *gin.Context) {
+	var req requests.RegisterUserRequest
 	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -40,8 +40,8 @@ func (uc *UserController) RegisterUser(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"id": id})
 }
 
-func (uc *UserController) AthenticateUser(c *gin.Context) {
-	var req controllers.AuthRequest
+func (uc *UserHandler) AthenticateUser(c *gin.Context) {
+	var req requests.AuthRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -62,7 +62,7 @@ func (uc *UserController) AthenticateUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"token": token})
 }
 
-func (uc *UserController) GetUser(c *gin.Context) {
+func (uc *UserHandler) GetUser(c *gin.Context) {
 	id, err := token.ExtractTokenID(c)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -76,7 +76,7 @@ func (uc *UserController) GetUser(c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
-func (uc *UserController) GetUserByID(c *gin.Context) {
+func (uc *UserHandler) GetUserByID(c *gin.Context) {
 	id := c.Param("user_id")
 	id_int, err := strconv.Atoi(id)
 	if err != nil {

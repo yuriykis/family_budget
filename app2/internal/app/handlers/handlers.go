@@ -1,24 +1,24 @@
-package controllers
+package handlers
 
 import "github.com/gin-gonic/gin"
 
-type IUserController interface {
+type IUserHandler interface {
 	RegisterUser(c *gin.Context)
 	AthenticateUser(c *gin.Context)
 	GetUser(c *gin.Context)
 	GetUserByID(c *gin.Context)
 }
 
-type IServiceController interface {
+type IServiceHandler interface {
 	CheckHealth(c *gin.Context)
 }
 
-type IBudgetController interface {
+type IBudgetHandler interface {
 	CreateBudget(c *gin.Context)
 	GetAllBudgets(c *gin.Context)
 	GetBudgetByID(c *gin.Context)
 }
 
-type ICategoryController interface {
+type ICategoryHandler interface {
 	CreateCategory(c *gin.Context)
 }
