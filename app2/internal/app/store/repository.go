@@ -21,6 +21,7 @@ type ICategoryRepository interface {
 }
 
 type ITransactionRepository interface {
-	Create(model.Transaction) (int, error)
-	FindAll() ([]model.Transaction, error)
+	Create(model.Transaction, int) (int, error)
+	FindAll(int) ([]model.Transaction, error)
+	FindByCategory(int) ([]model.Transaction, error)
 }

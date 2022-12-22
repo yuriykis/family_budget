@@ -14,22 +14,24 @@ import (
 )
 
 type server struct {
-	router          *gin.Engine
-	logger          *log.Logger
-	userHandler     handlers.IUserHandler
-	serviceHandler  handlers.IServiceHandler
-	budgetHandler   handlers.IBudgetHandler
-	categoryHandler handlers.ICategoryHandler
+	router             *gin.Engine
+	logger             *log.Logger
+	userHandler        handlers.IUserHandler
+	serviceHandler     handlers.IServiceHandler
+	budgetHandler      handlers.IBudgetHandler
+	categoryHandler    handlers.ICategoryHandler
+	transactionHandler handlers.ITransactionHandler
 }
 
 func newServer(store store.IStore) *server {
 	s := &server{
-		router:          gin.Default(),
-		logger:          log.New(),
-		userHandler:     handler.NewsUserHandler(store),
-		serviceHandler:  handler.NewServiceHandler(),
-		budgetHandler:   handler.NewBudgetHandler(store),
-		categoryHandler: handler.NewCategoryHandler(store),
+		router:             gin.Default(),
+		logger:             log.New(),
+		userHandler:        handler.NewsUserHandler(store),
+		serviceHandler:     handler.NewServiceHandler(),
+		budgetHandler:      handler.NewBudgetHandler(store),
+		categoryHandler:    handler.NewCategoryHandler(store),
+		transactionHandler: handler.NewTransactionHandler(store),
 	}
 	s.configureRouter()
 	return s
@@ -50,8 +52,10 @@ func (s *server) configureRouter() {
 	protected.POST("/budget", s.budgetHandler.CreateBudget)
 	protected.GET("/budget", s.budgetHandler.GetAllBudgets)
 	protected.GET("/budget/:budget_id", s.budgetHandler.GetBudgetByID)
+	protected.POST("/budget/:budget_id/transaction", s.transactionHandler.CreateTransaction)
 
 	protected.POST("/category", s.categoryHandler.CreateCategory)
+
 }
 
 func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {

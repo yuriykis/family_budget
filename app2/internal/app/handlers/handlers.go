@@ -22,3 +22,7 @@ type IBudgetHandler interface {
 type ICategoryHandler interface {
 	CreateCategory(c *gin.Context)
 }
+
+type ITransactionHandler interface {
+	CreateTransaction(c *gin.Context)
+}
