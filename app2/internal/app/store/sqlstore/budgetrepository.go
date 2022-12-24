@@ -47,3 +47,40 @@ func (r *BudgetRepository) Find(id int) (*model.Budget, error) {
 
 	return budget, err
 }
+
+func (r *BudgetRepository) Edit(budget model.Budget) error {
+	_, err := r.store.db.Exec(
+		"UPDATE budgets SET name = $1, description = $2, amount = $3 WHERE id = $4",
+		budget.Name,
+		budget.Description,
+		budget.Amount,
+		budget.ID,
+	)
+
+	return err
+}
+
+func (r *BudgetRepository) Delete(id int) error {
+	_, err := r.store.db.Exec("DELETE FROM budgets WHERE id = $1", id)
+
+	return err
+}
+
+func (r *BudgetRepository) Share(budgetID int, userID int) error {
+	// check if user already has access to budget
+	var count int
+	err := r.store.db.QueryRow(
+		"SELECT COUNT(*) FROM user_budgets WHERE budget_id = $1 AND user_id = $2",
+		budgetID,
+		userID,
+	).Scan(&count)
+
+	if err != nil {
+		return err
+	}
+
+	_, err = r.store.db.Exec(
+		"INSERT INTO user_budgets (budget_id, user_id, ownership) VALUES ($1, $2, $3)", budgetID, userID, false)
+
+	return err
+}

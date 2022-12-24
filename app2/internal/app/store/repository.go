@@ -6,12 +6,16 @@ type IUserRepository interface {
 	Create(model.User) (int, error)
 	Find(int) (*model.User, error)
 	AuthCheck(string, string) (string, error)
+	FindAll() ([]model.User, error)
 }
 
 type IBudgetRepository interface {
 	Create(model.Budget) (int, error)
 	FindAll() ([]model.Budget, error)
 	Find(int) (*model.Budget, error)
+	Edit(model.Budget) error
+	Delete(int) error
+	Share(int, int) error
 }
 
 type ICategoryRepository interface {

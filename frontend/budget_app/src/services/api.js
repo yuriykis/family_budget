@@ -22,7 +22,7 @@ const api = Axios.create({
 })
 
 export async function register(user) {
-    return api.post('/app/register/', user)
+    return api.post('/api/register/', user)
 }
 
 export async function loginToTheApplication(username, password) {
@@ -30,53 +30,53 @@ export async function loginToTheApplication(username, password) {
 }
 
 export async function getTransactions(budgetId) {
-    return api.get(`/app/budget/${budgetId}/transaction/`, { headers: authenticationHeader() })
+    return api.get(`/api/budget/${budgetId}/transaction/`, { headers: authenticationHeader() })
 }
 
 export async function createTransaction(transaction, budgetId) {
-    return api.post(`/app/budget/${budgetId}/transaction/`, transaction, { headers: authenticationHeader() })
+    return api.post(`/api/budget/${budgetId}/transaction/`, transaction, { headers: authenticationHeader() })
 }
 
 export async function getTransactionsByCategory(categoryId) {
-    return api.get(`/app/transaction/?category=${categoryId}`, { headers: authenticationHeader() })
+    return api.get(`/api/transaction/?category=${categoryId}`, { headers: authenticationHeader() })
 }
 
 export async function getBudgets() {
-    return api.get('/app/budget/', { headers: authenticationHeader() })
+    return api.get('/api/budget/', { headers: authenticationHeader() })
 }
 
 export async function createBudget(budget) {
-    return api.post('/app/budget/', budget, { headers: authenticationHeader() })
+    return api.post('/api/budget/', budget, { headers: authenticationHeader() })
 }
 
 export async function editBudget(budget) {
-    return api.put(`/app/budget/${budget.id}/`, budget, { headers: authenticationHeader() })
+    return api.put(`/api/budget/${budget.id}/`, budget, { headers: authenticationHeader() })
 }
 
 export async function deleteBudget(budgetId) {
-    return api.delete(`/app/budget/${budgetId}/`, { headers: authenticationHeader() })
+    return api.delete(`/api/budget/${budgetId}/`, { headers: authenticationHeader() })
 }
 
 export async function createCategory(category) {
-    return api.post('/app/category/', category, { headers: authenticationHeader() })
+    return api.post('/api/category/', category, { headers: authenticationHeader() })
 }
 
 export async function getCategories() {
-    return api.get('/app/category/', { headers: authenticationHeader() })
+    return api.get('/api/category/', { headers: authenticationHeader() })
 }
 
 export async function getMyUser() {
-    return api.get('/app/user/', { headers: authenticationHeader() })
+    return api.get('/api/user/', { headers: authenticationHeader() })
 }
 
 export async function getUser(userId) {
-    return api.get(`/app/user/${userId}/`, { headers: authenticationHeader() })
+    return api.get(`/api/user/${userId}/`, { headers: authenticationHeader() })
 }
 
 export async function getAllUsers() {
-    return api.get('/app/users/', { headers: authenticationHeader() })
+    return api.get('/api/users/', { headers: authenticationHeader() })
 }
 
 export async function shareBudget(budgetId, userId) {
-    return api.post(`/app/budget/${budgetId}/share/`, { user_id: userId }, { headers: authenticationHeader() })
+    return api.post(`/api/budget/${budgetId}/share/`, { user_id: userId }, { headers: authenticationHeader() })
 }

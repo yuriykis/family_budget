@@ -17,12 +17,17 @@ type IBudgetHandler interface {
 	CreateBudget(c *gin.Context)
 	GetAllBudgets(c *gin.Context)
 	GetBudgetByID(c *gin.Context)
+	EditBudget(c *gin.Context)
+	DeleteBudget(c *gin.Context)
+	ShareBudget(c *gin.Context)
 }
 
 type ICategoryHandler interface {
 	CreateCategory(c *gin.Context)
+	FindAllCategories(c *gin.Context)
 }
 
 type ITransactionHandler interface {
 	CreateTransaction(c *gin.Context)
+	GetTransactions(c *gin.Context)
 }

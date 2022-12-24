@@ -38,9 +38,13 @@ func TokenValid(c *gin.Context) error {
 
 func ExtractTokenID(c *gin.Context) (uint, error) {
 	tokenString := ExtractToken(c)
-	tokenClaims, err := jwt.ParseWithClaims(tokenString, &jwt.MapClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte("secret"), nil
-	})
+	tokenClaims, err := jwt.ParseWithClaims(
+		tokenString,
+		&jwt.MapClaims{},
+		func(token *jwt.Token) (interface{}, error) {
+			return []byte("secret"), nil
+		},
+	)
 	if err != nil {
 		return 0, err
 	}

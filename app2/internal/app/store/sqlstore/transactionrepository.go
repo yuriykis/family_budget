@@ -37,7 +37,14 @@ func (r *TransactionRepository) FindAll(budgetID int) ([]model.Transaction, erro
 	transactions := []model.Transaction{}
 	for rows.Next() {
 		transaction := model.Transaction{}
-		err := rows.Scan(&transaction.ID, &transaction.Title, &transaction.BudgetID, &transaction.CategoryID, &transaction.Amount, &transaction.Type)
+		err := rows.Scan(
+			&transaction.ID,
+			&transaction.Title,
+			&transaction.BudgetID,
+			&transaction.CategoryID,
+			&transaction.Amount,
+			&transaction.Type,
+		)
 		if err != nil {
 			return nil, err
 		}
@@ -58,7 +65,14 @@ func (r *TransactionRepository) FindByCategory(categoryID int) ([]model.Transact
 	transactions := []model.Transaction{}
 	for rows.Next() {
 		transaction := model.Transaction{}
-		err := rows.Scan(&transaction.ID, &transaction.Title, &transaction.BudgetID, &transaction.CategoryID, &transaction.Amount, &transaction.Type)
+		err := rows.Scan(
+			&transaction.ID,
+			&transaction.Title,
+			&transaction.BudgetID,
+			&transaction.CategoryID,
+			&transaction.Amount,
+			&transaction.Type,
+		)
 		if err != nil {
 			return nil, err
 		}

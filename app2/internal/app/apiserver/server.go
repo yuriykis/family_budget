@@ -52,9 +52,14 @@ func (s *server) configureRouter() {
 	protected.POST("/budget", s.budgetHandler.CreateBudget)
 	protected.GET("/budget", s.budgetHandler.GetAllBudgets)
 	protected.GET("/budget/:budget_id", s.budgetHandler.GetBudgetByID)
+	protected.PUT("/budget/:budget_id", s.budgetHandler.EditBudget)
+	protected.DELETE("/budget/:budget_id", s.budgetHandler.DeleteBudget)
 	protected.POST("/budget/:budget_id/transaction", s.transactionHandler.CreateTransaction)
+	protected.GET("/budget/:budget_id/transaction", s.transactionHandler.GetTransactions)
+	protected.POST("/budget/:budget_id/share", s.budgetHandler.ShareBudget)
 
 	protected.POST("/category", s.categoryHandler.CreateCategory)
+	protected.GET("/category", s.categoryHandler.FindAllCategories)
 
 }
 

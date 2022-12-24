@@ -37,3 +37,12 @@ func (cc *CategoryHandler) CreateCategory(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"id": id})
 
 }
+
+func (cc *CategoryHandler) FindAllCategories(c *gin.Context) {
+	categories, err := cc.store.Category().FindAll()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, categories)
+}

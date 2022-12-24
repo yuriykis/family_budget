@@ -75,3 +75,22 @@ func (r *UserRepository) Find(id int) (*model.User, error) {
 
 	return u, nil
 }
+
+func (r *UserRepository) FindAll() ([]model.User, error) {
+	rows, err := r.store.db.Query("SELECT id, first_name, last_name, email FROM users")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	users := []model.User{}
+	for rows.Next() {
+		u := model.User{}
+		if err := rows.Scan(&u.ID, &u.FirstName, &u.LastName, &u.Email); err != nil {
+			return nil, err
+		}
+		users = append(users, u)
+	}
+
+	return users, nil
+}

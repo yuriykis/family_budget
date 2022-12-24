@@ -44,3 +44,19 @@ func (tc *TransactionHandler) CreateTransaction(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, gin.H{"id": id})
 }
+
+func (tc *TransactionHandler) GetTransactions(c *gin.Context) {
+	budgetIDStr := c.Param("budget_id")
+	budgetID, err := strconv.Atoi(budgetIDStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	transactions, err := tc.store.Transaction().FindAll(budgetID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, transactions)
+}

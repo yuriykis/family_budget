@@ -61,3 +61,64 @@ func (bc *BudgetHandler) GetAllBudgets(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, budgets)
 }
+
+func (bc *BudgetHandler) EditBudget(c *gin.Context) {
+	id := c.Param("budget_id")
+	id_int, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	var req requests.EditBudgetRequest
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	b := model.Budget{
+		ID:          id_int,
+		Name:        req.Name,
+		Description: req.Description,
+		Amount:      req.Amount,
+	}
+	err = bc.store.Budget().Edit(b)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "Budget updated"})
+}
+
+func (bc *BudgetHandler) DeleteBudget(c *gin.Context) {
+	id := c.Param("budget_id")
+	id_int, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	err = bc.store.Budget().Delete(id_int)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "Budget deleted"})
+}
+
+func (bc *BudgetHandler) ShareBudget(c *gin.Context) {
+	id := c.Param("budget_id")
+	id_int, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	var req requests.ShareBudgetRequest
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	err = bc.store.Budget().Share(id_int, req.UserID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "Budget shared"})
+}
