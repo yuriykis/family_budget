@@ -13,8 +13,8 @@
           </v-toolbar>
           <v-card-text>
             <v-form>
-              <v-text-field prepend-icon="mdi-account" name="username" label="Username" type="text" color="#363636"
-                v-model="userData.username">
+              <v-text-field prepend-icon="mdi-account" name="email" label="Email" type="text" color="#363636"
+                v-model="userData.email">
               </v-text-field>
               <v-text-field id="password" prepend-icon="mdi-lock" name="password" label="Password" type="password"
                 color="#363636" v-model="userData.password">
@@ -47,7 +47,7 @@ export default {
 
   data: () => ({
     userData: {
-      username: '',
+      email: '',
       password: '',
     },
     loading: false
@@ -71,13 +71,13 @@ export default {
       if (this.isAuthenticated()) {
         this.$router.push('/')
       } else {
-        alert('Wrong username or password')
+        alert('Wrong email or password')
       }
       this.loading = false
     },
     ifFieldsAreEmpty() {
       return (
-        this.userData.username === '' ||
+        this.userData.email === '' ||
         this.userData.password === ''
       )
     }

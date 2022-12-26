@@ -24,10 +24,15 @@ func (bc *BudgetHandler) CreateBudget(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	amountFloat, err := strconv.ParseFloat(req.Amount, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 	b := model.Budget{
 		Name:        req.Name,
 		Description: req.Description,
-		Amount:      req.Amount,
+		Amount:      amountFloat,
 	}
 	id, err := bc.store.Budget().Create(b)
 	if err != nil {

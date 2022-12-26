@@ -37,6 +37,8 @@ func (r *TransactionRepository) FindAll(budgetID int) ([]model.Transaction, erro
 	transactions := []model.Transaction{}
 	for rows.Next() {
 		transaction := model.Transaction{}
+		var tmp string
+		var tmp2 string
 		err := rows.Scan(
 			&transaction.ID,
 			&transaction.Title,
@@ -44,6 +46,8 @@ func (r *TransactionRepository) FindAll(budgetID int) ([]model.Transaction, erro
 			&transaction.CategoryID,
 			&transaction.Amount,
 			&transaction.Type,
+			&tmp,
+			&tmp2,
 		)
 		if err != nil {
 			return nil, err

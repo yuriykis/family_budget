@@ -79,6 +79,10 @@ func (r *BudgetRepository) Share(budgetID int, userID int) error {
 		return err
 	}
 
+	if count > 0 {
+		return nil
+	}
+
 	_, err = r.store.db.Exec(
 		"INSERT INTO user_budgets (budget_id, user_id, ownership) VALUES ($1, $2, $3)", budgetID, userID, false)
 

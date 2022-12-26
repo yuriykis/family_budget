@@ -17,9 +17,44 @@ func (r *CategoryRepository) Create(category model.Category) (int, error) {
 }
 
 func (r *CategoryRepository) FindAll() ([]model.Category, error) {
-	panic("not implemented") // TODO: Implement
+	rows, err := r.store.db.Query("SELECT * FROM categories")
+
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	categories := []model.Category{}
+	for rows.Next() {
+		category := model.Category{}
+		var tmp string
+		var tmp2 string
+		err := rows.Scan(
+			&category.ID,
+			&category.Name,
+			&category.Description,
+			&tmp,
+			&tmp2,
+		)
+		if err != nil {
+			return nil, err
+		}
+		categories = append(categories, category)
+	}
+
+	return categories, nil
 }
 
-func (r *CategoryRepository) Find(int) (*model.Category, error) {
-	panic("not implemented") // TODO: Implement
+func (r *CategoryRepository) Find(categoryID int) (*model.Category, error) {
+	category := model.Category{}
+	category.ID = categoryID
+	err := r.store.db.QueryRow(
+		"SELECT * FROM categories WHERE id = $1",
+	).Scan(
+		&category.ID,
+		&category.Name,
+		&category.Description,
+	)
+
+	return &category, err
 }

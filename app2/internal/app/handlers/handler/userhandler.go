@@ -36,7 +36,6 @@ func (uc *UserHandler) RegisterUser(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-
 	c.JSON(http.StatusCreated, gin.H{"id": id})
 }
 
@@ -59,7 +58,7 @@ func (uc *UserHandler) AthenticateUser(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"token": token})
+	c.JSON(http.StatusOK, gin.H{"access": token})
 }
 
 func (uc *UserHandler) GetUser(c *gin.Context) {

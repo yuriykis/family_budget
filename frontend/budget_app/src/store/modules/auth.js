@@ -14,7 +14,7 @@ const getters = {
 const actions = {
     async loginUser({ commit }, userData) {
         try {
-            const response = await loginToTheApplication(userData.username, userData.password)
+            const response = await loginToTheApplication(userData.email, userData.password)
             commit('setAuth', await response.data)
         } catch (error) {
             console.log(error)

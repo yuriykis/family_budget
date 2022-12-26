@@ -39,6 +39,8 @@ func newServer(store store.IStore) *server {
 
 func (s *server) configureRouter() {
 
+	s.router.Use(middlewares.CorsMiddleware())
+
 	public := s.router.Group("/api")
 	public.GET("/healthcheck", s.serviceHandler.CheckHealth)
 	public.POST("/register", s.userHandler.RegisterUser)
