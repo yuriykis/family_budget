@@ -6,16 +6,47 @@ type BudgetRepository struct {
 	store *Store
 }
 
-func (r *BudgetRepository) Create(budget model.Budget) (int, error) {
+func (r *BudgetRepository) Create(budget model.Budget, userID uint) (int, error) {
 
-	err := r.store.db.QueryRow(
+	// sql transaction creates a new budget and user_budget records
+
+	tx, err := r.store.db.Begin()
+	if err != nil {
+		return 0, err
+	}
+
+	var id int
+	err = tx.QueryRow(
 		"INSERT INTO budgets (name, description, amount) VALUES ($1, $2, $3) RETURNING id",
 		budget.Name,
 		budget.Description,
 		budget.Amount,
-	).Scan(&budget.ID)
+	).Scan(&id)
 
-	return budget.ID, err
+	if err != nil {
+		tx.Rollback()
+		return 0, err
+	}
+
+	_, err = tx.Exec(
+		"INSERT INTO user_budgets (budget_id, user_id, ownership, readonly) VALUES ($1, $2, $3, $4)",
+		id,
+		userID,
+		true,
+		false,
+	)
+
+	if err != nil {
+		tx.Rollback()
+		return 0, err
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
 }
 
 func (r *BudgetRepository) FindAll() ([]model.Budget, error) {

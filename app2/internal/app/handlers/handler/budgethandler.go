@@ -4,6 +4,7 @@ import (
 	"app/internal/app/handlers/requests"
 	"app/internal/app/model"
 	"app/internal/app/store"
+	"app/internal/app/utils/token"
 	"net/http"
 	"strconv"
 
@@ -19,6 +20,11 @@ func NewBudgetHandler(store store.IStore) *BudgetHandler {
 }
 
 func (bh *BudgetHandler) CreateBudget(c *gin.Context) {
+	userID, err := token.ExtractTokenID(c)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+		return
+	}
 	var req requests.CreateBudgetRequest
 	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -34,7 +40,7 @@ func (bh *BudgetHandler) CreateBudget(c *gin.Context) {
 		Description: req.Description,
 		Amount:      amountFloat,
 	}
-	id, err := bh.store.Budget().Create(b)
+	id, err := bh.store.Budget().Create(b, userID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

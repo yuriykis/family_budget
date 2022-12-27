@@ -10,7 +10,7 @@ type IUserRepository interface {
 }
 
 type IBudgetRepository interface {
-	Create(model.Budget) (int, error)
+	Create(model.Budget, uint) (int, error)
 	FindAll() ([]model.Budget, error)
 	Find(int) (*model.Budget, error)
 	Edit(model.Budget) error
