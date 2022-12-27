@@ -17,7 +17,7 @@ func NewCategoryHandler(store store.IStore) *CategoryHandler {
 	return &CategoryHandler{store: store}
 }
 
-func (cc *CategoryHandler) CreateCategory(c *gin.Context) {
+func (ch *CategoryHandler) CreateCategory(c *gin.Context) {
 	var req requests.CreateCategoryRequest
 	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -28,7 +28,7 @@ func (cc *CategoryHandler) CreateCategory(c *gin.Context) {
 		Description: req.Description,
 	}
 
-	id, err := cc.store.Category().Create(cate)
+	id, err := ch.store.Category().Create(cate)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -38,8 +38,8 @@ func (cc *CategoryHandler) CreateCategory(c *gin.Context) {
 
 }
 
-func (cc *CategoryHandler) FindAllCategories(c *gin.Context) {
-	categories, err := cc.store.Category().FindAll()
+func (ch *CategoryHandler) FindAllCategories(c *gin.Context) {
+	categories, err := ch.store.Category().FindAll()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
