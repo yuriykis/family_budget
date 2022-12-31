@@ -8,3 +8,10 @@ type Transaction struct {
 	Amount     float64
 	Type       string
 }
+
+// transaction types
+
+const (
+	TransactionTypeIncome  = "INCOME"
+	TransactionTypeExpense = "EXPENSE"
+)

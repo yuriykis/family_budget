@@ -1,6 +1,9 @@
 package store
 
-import "app/internal/app/model"
+import (
+	"app/internal/app/model"
+	"app/internal/app/response"
+)
 
 type IUserRepository interface {
 	Create(model.User) (int, error)
@@ -11,7 +14,7 @@ type IUserRepository interface {
 
 type IBudgetRepository interface {
 	Create(model.Budget, uint) (int, error)
-	FindAll() ([]model.Budget, error)
+	FindAll() ([]response.BudgetResponse, error)
 	Find(int) (*model.Budget, error)
 	Edit(model.Budget) error
 	Delete(int) error

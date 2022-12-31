@@ -1,6 +1,9 @@
 package sqlstore
 
-import "app/internal/app/model"
+import (
+	"app/internal/app/model"
+	"app/internal/app/response"
+)
 
 type BudgetRepository struct {
 	store *Store
@@ -49,19 +52,59 @@ func (r *BudgetRepository) Create(budget model.Budget, userID uint) (int, error)
 	return id, nil
 }
 
-func (r *BudgetRepository) FindAll() ([]model.Budget, error) {
-	rows, err := r.store.db.Query("SELECT id, name, description, amount FROM budgets")
+func (r *BudgetRepository) FindAll() ([]response.BudgetResponse, error) {
+	budgetRows, err := r.store.db.Query("SELECT id, name, description, amount FROM budgets")
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+	defer budgetRows.Close()
 
-	budgets := []model.Budget{}
-	for rows.Next() {
-		budget := model.Budget{}
-		err := rows.Scan(&budget.ID, &budget.Name, &budget.Description, &budget.Amount)
+	budgets := []response.BudgetResponse{}
+	for budgetRows.Next() {
+		budget := response.BudgetResponse{}
+		err := budgetRows.Scan(&budget.ID, &budget.Name, &budget.Description, &budget.Amount)
 		if err != nil {
 			return nil, err
+		}
+
+		ubsRows, err := r.store.db.Query("SELECT * FROM user_budgets WHERE budget_id = $1", budget.ID)
+		if err != nil {
+			return nil, err
+		}
+		defer ubsRows.Close()
+
+		for ubsRows.Next() {
+
+			var id int
+			var budgetID int
+			var userID uint
+			var ownership bool
+			var readonly bool
+			var tmp string
+			var tmp2 string
+			err := ubsRows.Scan(&id, &budgetID, &userID, &ownership, &readonly, &tmp, &tmp2)
+			if err != nil {
+				return nil, err
+			}
+
+			budget.AmountLeft = budget.Amount
+			budget.Ownership = ownership
+			budget.TotalTransactions = 0
+
+			// calculate amount left for budget
+			transactionRows, err := r.store.Transaction().FindAll(budget.ID)
+			if err != nil {
+				return nil, err
+			}
+
+			for _, t := range transactionRows {
+				amount := t.Amount
+				if t.Type == model.TransactionTypeExpense {
+					amount = -amount
+				}
+				budget.AmountLeft += amount
+				budget.TotalTransactions++
+			}
 		}
 		budgets = append(budgets, budget)
 	}
