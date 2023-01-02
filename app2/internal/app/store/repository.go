@@ -31,4 +31,6 @@ type ITransactionRepository interface {
 	Create(model.Transaction, int) (int, error)
 	FindAll(int) ([]model.Transaction, error)
 	FindByCategory(int) ([]model.Transaction, error)
+	Delete(int) error
+	DeleteByBudget(int) error
 }

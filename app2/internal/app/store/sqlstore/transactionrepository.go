@@ -85,3 +85,13 @@ func (r *TransactionRepository) FindByCategory(categoryID int) ([]model.Transact
 
 	return transactions, nil
 }
+
+func (r *TransactionRepository) Delete(id int) error {
+	_, err := r.store.db.Exec("DELETE FROM transactions WHERE id = $1", id)
+	return err
+}
+
+func (r *TransactionRepository) DeleteByBudget(budgetID int) error {
+	_, err := r.store.db.Exec("DELETE FROM transactions WHERE budget_id = $1", budgetID)
+	return err
+}

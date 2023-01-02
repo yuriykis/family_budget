@@ -25,10 +25,18 @@ func (th *TransactionHandler) CreateTransaction(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	// convert amount to float
+	amountFloat, err := strconv.ParseFloat(req.Amount, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	t := model.Transaction{
 		Title:      req.Title,
-		CategoryID: req.CategoryID,
-		Amount:     req.Amount,
+		CategoryID: req.Category,
+		Amount:     amountFloat,
 		Type:       req.Type,
 	}
 	budgetID, err := strconv.Atoi(budgetIDStr)

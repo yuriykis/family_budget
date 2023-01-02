@@ -34,6 +34,7 @@ export async function getTransactions(budgetId) {
 }
 
 export async function createTransaction(transaction, budgetId) {
+    console.log(transaction)
     return api.post(`/api/auth/budget/${budgetId}/transaction`, transaction, { headers: authenticationHeader() })
 }
 

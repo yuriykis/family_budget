@@ -135,7 +135,35 @@ func (r *BudgetRepository) Edit(budget model.Budget) error {
 }
 
 func (r *BudgetRepository) Delete(id int) error {
-	_, err := r.store.db.Exec("DELETE FROM budgets WHERE id = $1", id)
+	tx, err := r.store.db.Begin()
+	if err != nil {
+		return err
+	}
+
+	// delete all transactions for budget
+	err = r.store.Transaction().DeleteByBudget(id)
+
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	// delete all user_budgets for budget
+	_, err = r.store.db.Exec("DELETE FROM user_budgets WHERE budget_id = $1", id)
+
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	_, err = r.store.db.Exec("DELETE FROM budgets WHERE id = $1", id)
+
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	err = tx.Commit()
 
 	return err
 }

@@ -73,7 +73,7 @@ export default {
             this.dialog = false;
             this.loading = true;
             try {
-                await this.deleteBudgetAction(budget.width);
+                await this.deleteBudgetAction(budget.id);
             } catch (error) {
                 console.log(error);
             }
