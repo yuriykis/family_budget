@@ -1,6 +1,7 @@
 package apiserver
 
 import (
+	"app/internal/app/graph"
 	"app/internal/app/handlers"
 	"app/internal/app/handlers/handler"
 	"app/internal/app/middlewares"
@@ -8,6 +9,8 @@ import (
 
 	"net/http"
 
+	gqlhandler "github.com/99designs/gqlgen/graphql/handler"
+	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
@@ -16,6 +19,7 @@ import (
 type server struct {
 	router             *gin.Engine
 	logger             *log.Logger
+	graphqlEndpoint    *gqlhandler.Server
 	userHandler        handlers.IUserHandler
 	serviceHandler     handlers.IServiceHandler
 	budgetHandler      handlers.IBudgetHandler
@@ -27,6 +31,7 @@ func newServer(store store.IStore) *server {
 	s := &server{
 		router:             gin.Default(),
 		logger:             log.New(),
+		graphqlEndpoint:    gqlhandler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: graph.NewResolver(store)})),
 		userHandler:        handler.NewsUserHandler(store),
 		serviceHandler:     handler.NewServiceHandler(),
 		budgetHandler:      handler.NewBudgetHandler(store),
@@ -34,6 +39,7 @@ func newServer(store store.IStore) *server {
 		transactionHandler: handler.NewTransactionHandler(store),
 	}
 	s.configureRouter()
+	s.configureGraphqlEndpoint()
 	return s
 }
 
@@ -63,6 +69,15 @@ func (s *server) configureRouter() {
 	protected.POST("/category", s.categoryHandler.CreateCategory)
 	protected.GET("/category", s.categoryHandler.FindAllCategories)
 
+}
+
+func (s *server) configureGraphqlEndpoint() {
+
+	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
+	http.Handle("/query", s.graphqlEndpoint)
+
+	log.Printf("connect to http://localhost:%s/ for GraphQL playground", "8080")
+	log.Fatal(http.ListenAndServe(":"+"8080", nil))
 }
 
 func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {

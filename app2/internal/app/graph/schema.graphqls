@@ -1,0 +1,138 @@
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  encryptedPassword: String!
+  budgets: [Budget!]!
+}
+
+type Budget {
+  id: ID!
+  name: String!
+  description: String!
+  amount: Float!
+  createdAt: String!
+  updatedAt: String!
+  userBudgets: [UserBudget!]!
+  transactions: [Transaction!]!
+}
+
+type Category {
+  id: ID!
+  name: String!
+  description: String!
+  createdAt: String!
+  updatedAt: String!
+  transactions: [Transaction!]!
+}
+
+type Transaction {
+  id: ID!
+  title: String!
+  budget: Budget!
+  category: Category!
+  amount: Float!
+  type: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type UserBudget {
+  id: ID!
+  user: User!
+  budget: Budget!
+  ownership: Boolean!
+  readOnly: Boolean!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Query {
+  user(id: ID!): User
+  budget(id: ID!): Budget
+  category(id: ID!): Category
+  transaction(id: ID!): Transaction
+}
+
+input NewUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  encryptedPassword: String!
+}
+
+input UpdateUserInput {
+  firstName: String
+  lastName: String
+  email: String
+  encryptedPassword: String
+}
+
+input NewBudgetInput {
+  name: String!
+  description: String!
+  amount: Float!
+}
+
+input UpdateBudgetInput {
+  name: String
+  description: String
+  amount: Float
+}
+
+input NewCategoryInput {
+  name: String!
+  description: String!
+}
+
+input UpdateCategoryInput {
+  name: String
+  description: String
+}
+
+input NewTransactionInput {
+  title: String!
+  budgetId: ID!
+  categoryId: ID!
+  amount: Float!
+  type: String!
+}
+
+input UpdateTransactionInput {
+  title: String
+  budgetId: ID
+  categoryId: ID
+  amount: Float
+  type: String
+}
+
+input NewUserBudgetInput {
+  userId: ID!
+  budgetId: ID!
+  ownership: Boolean!
+  readOnly: Boolean!
+}
+
+input UpdateUserBudgetInput {
+  ownership: Boolean
+  readOnly: Boolean
+}
+
+type Mutation {
+  createUser(input: NewUserInput!): User!
+  updateUser(id: ID!, input: UpdateUserInput!): User!
+  deleteUser(id: ID!): Boolean
+  createBudget(input: NewBudgetInput!): Budget!
+  updateBudget(id: ID!, input: UpdateBudgetInput!): Budget!
+  deleteBudget(id: ID!): Boolean
+  createCategory(input: NewCategoryInput!): Category!
+  updateCategory(id: ID!, input: UpdateCategoryInput!): Category!
+  deleteCategory(id: ID!): Boolean
+  createTransaction(input: NewTransactionInput!): Transaction!
+  updateTransaction(id: ID!, input: UpdateTransactionInput!): Transaction!
+  deleteTransaction(id: ID!): Boolean
+  createUserBudget(input: NewUserBudgetInput!): UserBudget!
+  updateUserBudget(id: ID!, input: UpdateUserBudgetInput!): UserBudget!
+  deleteUserBudget(id: ID!): Boolean
+}
