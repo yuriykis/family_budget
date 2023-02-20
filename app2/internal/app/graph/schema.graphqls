@@ -3,6 +3,7 @@ type User {
   firstName: String!
   lastName: String!
   email: String!
+  password: String!
   encryptedPassword: String!
   budgets: [Budget!]!
 }
@@ -59,14 +60,14 @@ input NewUserInput {
   firstName: String!
   lastName: String!
   email: String!
-  encryptedPassword: String!
+  password: String!
 }
 
 input UpdateUserInput {
   firstName: String
   lastName: String
   email: String
-  encryptedPassword: String
+  password: String
 }
 
 input NewBudgetInput {

@@ -39,7 +39,6 @@ func newServer(store store.IStore) *server {
 		transactionHandler: handler.NewTransactionHandler(store),
 	}
 	s.configureRouter()
-	s.configureGraphqlEndpoint()
 	return s
 }
 
@@ -69,15 +68,14 @@ func (s *server) configureRouter() {
 	protected.POST("/category", s.categoryHandler.CreateCategory)
 	protected.GET("/category", s.categoryHandler.FindAllCategories)
 
-}
-
-func (s *server) configureGraphqlEndpoint() {
-
-	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
-	http.Handle("/query", s.graphqlEndpoint)
-
-	log.Printf("connect to http://localhost:%s/ for GraphQL playground", "8080")
-	log.Fatal(http.ListenAndServe(":"+"8080", nil))
+	// graphql endpoint
+	s.router.POST("/query", func(c *gin.Context) {
+		s.graphqlEndpoint.ServeHTTP(c.Writer, c.Request)
+	})
+	// graphql playground
+	s.router.GET("/playground", func(c *gin.Context) {
+		playground.Handler("GraphQL playground", "/query").ServeHTTP(c.Writer, c.Request)
+	})
 }
 
 func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {

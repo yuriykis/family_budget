@@ -6,13 +6,32 @@ package graph
 
 import (
 	"app/internal/app/graph/model"
+	mainModel "app/internal/app/model"
 	"context"
 	"fmt"
+	"strconv"
 )
 
 // CreateUser is the resolver for the createUser field.
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUserInput) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: CreateUser - createUser"))
+	user := mainModel.User{
+		FirstName: input.FirstName,
+		LastName:  input.LastName,
+		Email:     input.Email,
+		Password:  input.Password,
+	}
+	userId, err := r.store.User().Create(user)
+	if err != nil {
+		return nil, err
+	}
+	user.ID = userId
+	return &model.User{
+		ID:        fmt.Sprintf("%d", user.ID),
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		Email:     user.Email,
+	}, nil
+
 }
 
 // UpdateUser is the resolver for the updateUser field.
@@ -87,7 +106,21 @@ func (r *mutationResolver) DeleteUserBudget(ctx context.Context, id string) (*bo
 
 // User is the resolver for the user field.
 func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: User - user"))
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		return nil, err
+	}
+	user, err := r.store.User().Find(intID)
+	if err != nil {
+		return nil, err
+	}
+	return &model.User{
+		ID:        fmt.Sprintf("%d", user.ID),
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		Email:     user.Email,
+	}, nil
+
 }
 
 // Budget is the resolver for the budget field.

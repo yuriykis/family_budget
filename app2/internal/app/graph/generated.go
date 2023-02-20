@@ -107,6 +107,7 @@ type ComplexityRoot struct {
 		FirstName         func(childComplexity int) int
 		ID                func(childComplexity int) int
 		LastName          func(childComplexity int) int
+		Password          func(childComplexity int) int
 	}
 
 	UserBudget struct {
@@ -583,6 +584,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.User.LastName(childComplexity), true
 
+	case "User.password":
+		if e.complexity.User.Password == nil {
+			break
+		}
+
+		return e.complexity.User.Password(childComplexity), true
+
 	case "UserBudget.budget":
 		if e.complexity.UserBudget.Budget == nil {
 			break
@@ -735,7 +743,7 @@ func (ec *executionContext) field_Mutation_createBudget_args(ctx context.Context
 	var arg0 model.NewBudgetInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNNewBudgetInput2appᚋgraphᚋmodelᚐNewBudgetInput(ctx, tmp)
+		arg0, err = ec.unmarshalNNewBudgetInput2appᚋinternalᚋappᚋgraphᚋmodelᚐNewBudgetInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -750,7 +758,7 @@ func (ec *executionContext) field_Mutation_createCategory_args(ctx context.Conte
 	var arg0 model.NewCategoryInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNNewCategoryInput2appᚋgraphᚋmodelᚐNewCategoryInput(ctx, tmp)
+		arg0, err = ec.unmarshalNNewCategoryInput2appᚋinternalᚋappᚋgraphᚋmodelᚐNewCategoryInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -765,7 +773,7 @@ func (ec *executionContext) field_Mutation_createTransaction_args(ctx context.Co
 	var arg0 model.NewTransactionInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNNewTransactionInput2appᚋgraphᚋmodelᚐNewTransactionInput(ctx, tmp)
+		arg0, err = ec.unmarshalNNewTransactionInput2appᚋinternalᚋappᚋgraphᚋmodelᚐNewTransactionInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -780,7 +788,7 @@ func (ec *executionContext) field_Mutation_createUserBudget_args(ctx context.Con
 	var arg0 model.NewUserBudgetInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNNewUserBudgetInput2appᚋgraphᚋmodelᚐNewUserBudgetInput(ctx, tmp)
+		arg0, err = ec.unmarshalNNewUserBudgetInput2appᚋinternalᚋappᚋgraphᚋmodelᚐNewUserBudgetInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -795,7 +803,7 @@ func (ec *executionContext) field_Mutation_createUser_args(ctx context.Context, 
 	var arg0 model.NewUserInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNNewUserInput2appᚋgraphᚋmodelᚐNewUserInput(ctx, tmp)
+		arg0, err = ec.unmarshalNNewUserInput2appᚋinternalᚋappᚋgraphᚋmodelᚐNewUserInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -894,7 +902,7 @@ func (ec *executionContext) field_Mutation_updateBudget_args(ctx context.Context
 	var arg1 model.UpdateBudgetInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg1, err = ec.unmarshalNUpdateBudgetInput2appᚋgraphᚋmodelᚐUpdateBudgetInput(ctx, tmp)
+		arg1, err = ec.unmarshalNUpdateBudgetInput2appᚋinternalᚋappᚋgraphᚋmodelᚐUpdateBudgetInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -918,7 +926,7 @@ func (ec *executionContext) field_Mutation_updateCategory_args(ctx context.Conte
 	var arg1 model.UpdateCategoryInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg1, err = ec.unmarshalNUpdateCategoryInput2appᚋgraphᚋmodelᚐUpdateCategoryInput(ctx, tmp)
+		arg1, err = ec.unmarshalNUpdateCategoryInput2appᚋinternalᚋappᚋgraphᚋmodelᚐUpdateCategoryInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -942,7 +950,7 @@ func (ec *executionContext) field_Mutation_updateTransaction_args(ctx context.Co
 	var arg1 model.UpdateTransactionInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg1, err = ec.unmarshalNUpdateTransactionInput2appᚋgraphᚋmodelᚐUpdateTransactionInput(ctx, tmp)
+		arg1, err = ec.unmarshalNUpdateTransactionInput2appᚋinternalᚋappᚋgraphᚋmodelᚐUpdateTransactionInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -966,7 +974,7 @@ func (ec *executionContext) field_Mutation_updateUserBudget_args(ctx context.Con
 	var arg1 model.UpdateUserBudgetInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg1, err = ec.unmarshalNUpdateUserBudgetInput2appᚋgraphᚋmodelᚐUpdateUserBudgetInput(ctx, tmp)
+		arg1, err = ec.unmarshalNUpdateUserBudgetInput2appᚋinternalᚋappᚋgraphᚋmodelᚐUpdateUserBudgetInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -990,7 +998,7 @@ func (ec *executionContext) field_Mutation_updateUser_args(ctx context.Context, 
 	var arg1 model.UpdateUserInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg1, err = ec.unmarshalNUpdateUserInput2appᚋgraphᚋmodelᚐUpdateUserInput(ctx, tmp)
+		arg1, err = ec.unmarshalNUpdateUserInput2appᚋinternalᚋappᚋgraphᚋmodelᚐUpdateUserInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -1404,7 +1412,7 @@ func (ec *executionContext) _Budget_userBudgets(ctx context.Context, field graph
 	}
 	res := resTmp.([]*model.UserBudget)
 	fc.Result = res
-	return ec.marshalNUserBudget2ᚕᚖappᚋgraphᚋmodelᚐUserBudgetᚄ(ctx, field.Selections, res)
+	return ec.marshalNUserBudget2ᚕᚖappᚋinternalᚋappᚋgraphᚋmodelᚐUserBudgetᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Budget_userBudgets(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1464,7 +1472,7 @@ func (ec *executionContext) _Budget_transactions(ctx context.Context, field grap
 	}
 	res := resTmp.([]*model.Transaction)
 	fc.Result = res
-	return ec.marshalNTransaction2ᚕᚖappᚋgraphᚋmodelᚐTransactionᚄ(ctx, field.Selections, res)
+	return ec.marshalNTransaction2ᚕᚖappᚋinternalᚋappᚋgraphᚋmodelᚐTransactionᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Budget_transactions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1746,7 +1754,7 @@ func (ec *executionContext) _Category_transactions(ctx context.Context, field gr
 	}
 	res := resTmp.([]*model.Transaction)
 	fc.Result = res
-	return ec.marshalNTransaction2ᚕᚖappᚋgraphᚋmodelᚐTransactionᚄ(ctx, field.Selections, res)
+	return ec.marshalNTransaction2ᚕᚖappᚋinternalᚋappᚋgraphᚋmodelᚐTransactionᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Category_transactions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1807,7 +1815,7 @@ func (ec *executionContext) _Mutation_createUser(ctx context.Context, field grap
 	}
 	res := resTmp.(*model.User)
 	fc.Result = res
-	return ec.marshalNUser2ᚖappᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+	return ec.marshalNUser2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createUser(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1826,6 +1834,8 @@ func (ec *executionContext) fieldContext_Mutation_createUser(ctx context.Context
 				return ec.fieldContext_User_lastName(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
+			case "password":
+				return ec.fieldContext_User_password(ctx, field)
 			case "encryptedPassword":
 				return ec.fieldContext_User_encryptedPassword(ctx, field)
 			case "budgets":
@@ -1875,7 +1885,7 @@ func (ec *executionContext) _Mutation_updateUser(ctx context.Context, field grap
 	}
 	res := resTmp.(*model.User)
 	fc.Result = res
-	return ec.marshalNUser2ᚖappᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+	return ec.marshalNUser2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateUser(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1894,6 +1904,8 @@ func (ec *executionContext) fieldContext_Mutation_updateUser(ctx context.Context
 				return ec.fieldContext_User_lastName(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
+			case "password":
+				return ec.fieldContext_User_password(ctx, field)
 			case "encryptedPassword":
 				return ec.fieldContext_User_encryptedPassword(ctx, field)
 			case "budgets":
@@ -1994,7 +2006,7 @@ func (ec *executionContext) _Mutation_createBudget(ctx context.Context, field gr
 	}
 	res := resTmp.(*model.Budget)
 	fc.Result = res
-	return ec.marshalNBudget2ᚖappᚋgraphᚋmodelᚐBudget(ctx, field.Selections, res)
+	return ec.marshalNBudget2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐBudget(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createBudget(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2066,7 +2078,7 @@ func (ec *executionContext) _Mutation_updateBudget(ctx context.Context, field gr
 	}
 	res := resTmp.(*model.Budget)
 	fc.Result = res
-	return ec.marshalNBudget2ᚖappᚋgraphᚋmodelᚐBudget(ctx, field.Selections, res)
+	return ec.marshalNBudget2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐBudget(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateBudget(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2189,7 +2201,7 @@ func (ec *executionContext) _Mutation_createCategory(ctx context.Context, field 
 	}
 	res := resTmp.(*model.Category)
 	fc.Result = res
-	return ec.marshalNCategory2ᚖappᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
+	return ec.marshalNCategory2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createCategory(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2257,7 +2269,7 @@ func (ec *executionContext) _Mutation_updateCategory(ctx context.Context, field 
 	}
 	res := resTmp.(*model.Category)
 	fc.Result = res
-	return ec.marshalNCategory2ᚖappᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
+	return ec.marshalNCategory2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateCategory(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2376,7 +2388,7 @@ func (ec *executionContext) _Mutation_createTransaction(ctx context.Context, fie
 	}
 	res := resTmp.(*model.Transaction)
 	fc.Result = res
-	return ec.marshalNTransaction2ᚖappᚋgraphᚋmodelᚐTransaction(ctx, field.Selections, res)
+	return ec.marshalNTransaction2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐTransaction(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createTransaction(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2448,7 +2460,7 @@ func (ec *executionContext) _Mutation_updateTransaction(ctx context.Context, fie
 	}
 	res := resTmp.(*model.Transaction)
 	fc.Result = res
-	return ec.marshalNTransaction2ᚖappᚋgraphᚋmodelᚐTransaction(ctx, field.Selections, res)
+	return ec.marshalNTransaction2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐTransaction(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateTransaction(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2571,7 +2583,7 @@ func (ec *executionContext) _Mutation_createUserBudget(ctx context.Context, fiel
 	}
 	res := resTmp.(*model.UserBudget)
 	fc.Result = res
-	return ec.marshalNUserBudget2ᚖappᚋgraphᚋmodelᚐUserBudget(ctx, field.Selections, res)
+	return ec.marshalNUserBudget2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐUserBudget(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createUserBudget(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2641,7 +2653,7 @@ func (ec *executionContext) _Mutation_updateUserBudget(ctx context.Context, fiel
 	}
 	res := resTmp.(*model.UserBudget)
 	fc.Result = res
-	return ec.marshalNUserBudget2ᚖappᚋgraphᚋmodelᚐUserBudget(ctx, field.Selections, res)
+	return ec.marshalNUserBudget2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐUserBudget(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateUserBudget(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2759,7 +2771,7 @@ func (ec *executionContext) _Query_user(ctx context.Context, field graphql.Colle
 	}
 	res := resTmp.(*model.User)
 	fc.Result = res
-	return ec.marshalOUser2ᚖappᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+	return ec.marshalOUser2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_user(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2778,6 +2790,8 @@ func (ec *executionContext) fieldContext_Query_user(ctx context.Context, field g
 				return ec.fieldContext_User_lastName(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
+			case "password":
+				return ec.fieldContext_User_password(ctx, field)
 			case "encryptedPassword":
 				return ec.fieldContext_User_encryptedPassword(ctx, field)
 			case "budgets":
@@ -2824,7 +2838,7 @@ func (ec *executionContext) _Query_budget(ctx context.Context, field graphql.Col
 	}
 	res := resTmp.(*model.Budget)
 	fc.Result = res
-	return ec.marshalOBudget2ᚖappᚋgraphᚋmodelᚐBudget(ctx, field.Selections, res)
+	return ec.marshalOBudget2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐBudget(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_budget(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2893,7 +2907,7 @@ func (ec *executionContext) _Query_category(ctx context.Context, field graphql.C
 	}
 	res := resTmp.(*model.Category)
 	fc.Result = res
-	return ec.marshalOCategory2ᚖappᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
+	return ec.marshalOCategory2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_category(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2958,7 +2972,7 @@ func (ec *executionContext) _Query_transaction(ctx context.Context, field graphq
 	}
 	res := resTmp.(*model.Transaction)
 	fc.Result = res
-	return ec.marshalOTransaction2ᚖappᚋgraphᚋmodelᚐTransaction(ctx, field.Selections, res)
+	return ec.marshalOTransaction2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐTransaction(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_transaction(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3246,7 +3260,7 @@ func (ec *executionContext) _Transaction_budget(ctx context.Context, field graph
 	}
 	res := resTmp.(*model.Budget)
 	fc.Result = res
-	return ec.marshalNBudget2ᚖappᚋgraphᚋmodelᚐBudget(ctx, field.Selections, res)
+	return ec.marshalNBudget2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐBudget(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Transaction_budget(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3308,7 +3322,7 @@ func (ec *executionContext) _Transaction_category(ctx context.Context, field gra
 	}
 	res := resTmp.(*model.Category)
 	fc.Result = res
-	return ec.marshalNCategory2ᚖappᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
+	return ec.marshalNCategory2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Transaction_category(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3690,6 +3704,50 @@ func (ec *executionContext) fieldContext_User_email(ctx context.Context, field g
 	return fc, nil
 }
 
+func (ec *executionContext) _User_password(ctx context.Context, field graphql.CollectedField, obj *model.User) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_User_password(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Password, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_User_password(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "User",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _User_encryptedPassword(ctx context.Context, field graphql.CollectedField, obj *model.User) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_User_encryptedPassword(ctx, field)
 	if err != nil {
@@ -3762,7 +3820,7 @@ func (ec *executionContext) _User_budgets(ctx context.Context, field graphql.Col
 	}
 	res := resTmp.([]*model.Budget)
 	fc.Result = res
-	return ec.marshalNBudget2ᚕᚖappᚋgraphᚋmodelᚐBudgetᚄ(ctx, field.Selections, res)
+	return ec.marshalNBudget2ᚕᚖappᚋinternalᚋappᚋgraphᚋmodelᚐBudgetᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_User_budgets(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3868,7 +3926,7 @@ func (ec *executionContext) _UserBudget_user(ctx context.Context, field graphql.
 	}
 	res := resTmp.(*model.User)
 	fc.Result = res
-	return ec.marshalNUser2ᚖappᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+	return ec.marshalNUser2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserBudget_user(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3887,6 +3945,8 @@ func (ec *executionContext) fieldContext_UserBudget_user(ctx context.Context, fi
 				return ec.fieldContext_User_lastName(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
+			case "password":
+				return ec.fieldContext_User_password(ctx, field)
 			case "encryptedPassword":
 				return ec.fieldContext_User_encryptedPassword(ctx, field)
 			case "budgets":
@@ -3926,7 +3986,7 @@ func (ec *executionContext) _UserBudget_budget(ctx context.Context, field graphq
 	}
 	res := resTmp.(*model.Budget)
 	fc.Result = res
-	return ec.marshalNBudget2ᚖappᚋgraphᚋmodelᚐBudget(ctx, field.Selections, res)
+	return ec.marshalNBudget2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐBudget(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserBudget_budget(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6108,7 +6168,7 @@ func (ec *executionContext) unmarshalInputNewUserInput(ctx context.Context, obj 
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"firstName", "lastName", "email", "encryptedPassword"}
+	fieldsInOrder := [...]string{"firstName", "lastName", "email", "password"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -6139,11 +6199,11 @@ func (ec *executionContext) unmarshalInputNewUserInput(ctx context.Context, obj 
 			if err != nil {
 				return it, err
 			}
-		case "encryptedPassword":
+		case "password":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("encryptedPassword"))
-			it.EncryptedPassword, err = ec.unmarshalNString2string(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("password"))
+			it.Password, err = ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -6336,7 +6396,7 @@ func (ec *executionContext) unmarshalInputUpdateUserInput(ctx context.Context, o
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"firstName", "lastName", "email", "encryptedPassword"}
+	fieldsInOrder := [...]string{"firstName", "lastName", "email", "password"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -6367,11 +6427,11 @@ func (ec *executionContext) unmarshalInputUpdateUserInput(ctx context.Context, o
 			if err != nil {
 				return it, err
 			}
-		case "encryptedPassword":
+		case "password":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("encryptedPassword"))
-			it.EncryptedPassword, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("password"))
+			it.Password, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -6878,6 +6938,13 @@ func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
+		case "password":
+
+			out.Values[i] = ec._User_password(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "encryptedPassword":
 
 			out.Values[i] = ec._User_encryptedPassword(ctx, field, obj)
@@ -7306,11 +7373,11 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) marshalNBudget2appᚋgraphᚋmodelᚐBudget(ctx context.Context, sel ast.SelectionSet, v model.Budget) graphql.Marshaler {
+func (ec *executionContext) marshalNBudget2appᚋinternalᚋappᚋgraphᚋmodelᚐBudget(ctx context.Context, sel ast.SelectionSet, v model.Budget) graphql.Marshaler {
 	return ec._Budget(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNBudget2ᚕᚖappᚋgraphᚋmodelᚐBudgetᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Budget) graphql.Marshaler {
+func (ec *executionContext) marshalNBudget2ᚕᚖappᚋinternalᚋappᚋgraphᚋmodelᚐBudgetᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Budget) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -7334,7 +7401,7 @@ func (ec *executionContext) marshalNBudget2ᚕᚖappᚋgraphᚋmodelᚐBudgetᚄ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNBudget2ᚖappᚋgraphᚋmodelᚐBudget(ctx, sel, v[i])
+			ret[i] = ec.marshalNBudget2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐBudget(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -7354,7 +7421,7 @@ func (ec *executionContext) marshalNBudget2ᚕᚖappᚋgraphᚋmodelᚐBudgetᚄ
 	return ret
 }
 
-func (ec *executionContext) marshalNBudget2ᚖappᚋgraphᚋmodelᚐBudget(ctx context.Context, sel ast.SelectionSet, v *model.Budget) graphql.Marshaler {
+func (ec *executionContext) marshalNBudget2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐBudget(ctx context.Context, sel ast.SelectionSet, v *model.Budget) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -7364,11 +7431,11 @@ func (ec *executionContext) marshalNBudget2ᚖappᚋgraphᚋmodelᚐBudget(ctx c
 	return ec._Budget(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNCategory2appᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v model.Category) graphql.Marshaler {
+func (ec *executionContext) marshalNCategory2appᚋinternalᚋappᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v model.Category) graphql.Marshaler {
 	return ec._Category(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNCategory2ᚖappᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v *model.Category) graphql.Marshaler {
+func (ec *executionContext) marshalNCategory2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v *model.Category) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -7408,27 +7475,27 @@ func (ec *executionContext) marshalNID2string(ctx context.Context, sel ast.Selec
 	return res
 }
 
-func (ec *executionContext) unmarshalNNewBudgetInput2appᚋgraphᚋmodelᚐNewBudgetInput(ctx context.Context, v interface{}) (model.NewBudgetInput, error) {
+func (ec *executionContext) unmarshalNNewBudgetInput2appᚋinternalᚋappᚋgraphᚋmodelᚐNewBudgetInput(ctx context.Context, v interface{}) (model.NewBudgetInput, error) {
 	res, err := ec.unmarshalInputNewBudgetInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNNewCategoryInput2appᚋgraphᚋmodelᚐNewCategoryInput(ctx context.Context, v interface{}) (model.NewCategoryInput, error) {
+func (ec *executionContext) unmarshalNNewCategoryInput2appᚋinternalᚋappᚋgraphᚋmodelᚐNewCategoryInput(ctx context.Context, v interface{}) (model.NewCategoryInput, error) {
 	res, err := ec.unmarshalInputNewCategoryInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNNewTransactionInput2appᚋgraphᚋmodelᚐNewTransactionInput(ctx context.Context, v interface{}) (model.NewTransactionInput, error) {
+func (ec *executionContext) unmarshalNNewTransactionInput2appᚋinternalᚋappᚋgraphᚋmodelᚐNewTransactionInput(ctx context.Context, v interface{}) (model.NewTransactionInput, error) {
 	res, err := ec.unmarshalInputNewTransactionInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNNewUserBudgetInput2appᚋgraphᚋmodelᚐNewUserBudgetInput(ctx context.Context, v interface{}) (model.NewUserBudgetInput, error) {
+func (ec *executionContext) unmarshalNNewUserBudgetInput2appᚋinternalᚋappᚋgraphᚋmodelᚐNewUserBudgetInput(ctx context.Context, v interface{}) (model.NewUserBudgetInput, error) {
 	res, err := ec.unmarshalInputNewUserBudgetInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNNewUserInput2appᚋgraphᚋmodelᚐNewUserInput(ctx context.Context, v interface{}) (model.NewUserInput, error) {
+func (ec *executionContext) unmarshalNNewUserInput2appᚋinternalᚋappᚋgraphᚋmodelᚐNewUserInput(ctx context.Context, v interface{}) (model.NewUserInput, error) {
 	res, err := ec.unmarshalInputNewUserInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
@@ -7448,11 +7515,11 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 	return res
 }
 
-func (ec *executionContext) marshalNTransaction2appᚋgraphᚋmodelᚐTransaction(ctx context.Context, sel ast.SelectionSet, v model.Transaction) graphql.Marshaler {
+func (ec *executionContext) marshalNTransaction2appᚋinternalᚋappᚋgraphᚋmodelᚐTransaction(ctx context.Context, sel ast.SelectionSet, v model.Transaction) graphql.Marshaler {
 	return ec._Transaction(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNTransaction2ᚕᚖappᚋgraphᚋmodelᚐTransactionᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Transaction) graphql.Marshaler {
+func (ec *executionContext) marshalNTransaction2ᚕᚖappᚋinternalᚋappᚋgraphᚋmodelᚐTransactionᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Transaction) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -7476,7 +7543,7 @@ func (ec *executionContext) marshalNTransaction2ᚕᚖappᚋgraphᚋmodelᚐTran
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNTransaction2ᚖappᚋgraphᚋmodelᚐTransaction(ctx, sel, v[i])
+			ret[i] = ec.marshalNTransaction2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐTransaction(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -7496,7 +7563,7 @@ func (ec *executionContext) marshalNTransaction2ᚕᚖappᚋgraphᚋmodelᚐTran
 	return ret
 }
 
-func (ec *executionContext) marshalNTransaction2ᚖappᚋgraphᚋmodelᚐTransaction(ctx context.Context, sel ast.SelectionSet, v *model.Transaction) graphql.Marshaler {
+func (ec *executionContext) marshalNTransaction2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐTransaction(ctx context.Context, sel ast.SelectionSet, v *model.Transaction) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -7506,36 +7573,36 @@ func (ec *executionContext) marshalNTransaction2ᚖappᚋgraphᚋmodelᚐTransac
 	return ec._Transaction(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNUpdateBudgetInput2appᚋgraphᚋmodelᚐUpdateBudgetInput(ctx context.Context, v interface{}) (model.UpdateBudgetInput, error) {
+func (ec *executionContext) unmarshalNUpdateBudgetInput2appᚋinternalᚋappᚋgraphᚋmodelᚐUpdateBudgetInput(ctx context.Context, v interface{}) (model.UpdateBudgetInput, error) {
 	res, err := ec.unmarshalInputUpdateBudgetInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNUpdateCategoryInput2appᚋgraphᚋmodelᚐUpdateCategoryInput(ctx context.Context, v interface{}) (model.UpdateCategoryInput, error) {
+func (ec *executionContext) unmarshalNUpdateCategoryInput2appᚋinternalᚋappᚋgraphᚋmodelᚐUpdateCategoryInput(ctx context.Context, v interface{}) (model.UpdateCategoryInput, error) {
 	res, err := ec.unmarshalInputUpdateCategoryInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNUpdateTransactionInput2appᚋgraphᚋmodelᚐUpdateTransactionInput(ctx context.Context, v interface{}) (model.UpdateTransactionInput, error) {
+func (ec *executionContext) unmarshalNUpdateTransactionInput2appᚋinternalᚋappᚋgraphᚋmodelᚐUpdateTransactionInput(ctx context.Context, v interface{}) (model.UpdateTransactionInput, error) {
 	res, err := ec.unmarshalInputUpdateTransactionInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNUpdateUserBudgetInput2appᚋgraphᚋmodelᚐUpdateUserBudgetInput(ctx context.Context, v interface{}) (model.UpdateUserBudgetInput, error) {
+func (ec *executionContext) unmarshalNUpdateUserBudgetInput2appᚋinternalᚋappᚋgraphᚋmodelᚐUpdateUserBudgetInput(ctx context.Context, v interface{}) (model.UpdateUserBudgetInput, error) {
 	res, err := ec.unmarshalInputUpdateUserBudgetInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNUpdateUserInput2appᚋgraphᚋmodelᚐUpdateUserInput(ctx context.Context, v interface{}) (model.UpdateUserInput, error) {
+func (ec *executionContext) unmarshalNUpdateUserInput2appᚋinternalᚋappᚋgraphᚋmodelᚐUpdateUserInput(ctx context.Context, v interface{}) (model.UpdateUserInput, error) {
 	res, err := ec.unmarshalInputUpdateUserInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNUser2appᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v model.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2appᚋinternalᚋappᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v model.User) graphql.Marshaler {
 	return ec._User(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNUser2ᚖappᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v *model.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v *model.User) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -7545,11 +7612,11 @@ func (ec *executionContext) marshalNUser2ᚖappᚋgraphᚋmodelᚐUser(ctx conte
 	return ec._User(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNUserBudget2appᚋgraphᚋmodelᚐUserBudget(ctx context.Context, sel ast.SelectionSet, v model.UserBudget) graphql.Marshaler {
+func (ec *executionContext) marshalNUserBudget2appᚋinternalᚋappᚋgraphᚋmodelᚐUserBudget(ctx context.Context, sel ast.SelectionSet, v model.UserBudget) graphql.Marshaler {
 	return ec._UserBudget(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNUserBudget2ᚕᚖappᚋgraphᚋmodelᚐUserBudgetᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.UserBudget) graphql.Marshaler {
+func (ec *executionContext) marshalNUserBudget2ᚕᚖappᚋinternalᚋappᚋgraphᚋmodelᚐUserBudgetᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.UserBudget) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -7573,7 +7640,7 @@ func (ec *executionContext) marshalNUserBudget2ᚕᚖappᚋgraphᚋmodelᚐUserB
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNUserBudget2ᚖappᚋgraphᚋmodelᚐUserBudget(ctx, sel, v[i])
+			ret[i] = ec.marshalNUserBudget2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐUserBudget(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -7593,7 +7660,7 @@ func (ec *executionContext) marshalNUserBudget2ᚕᚖappᚋgraphᚋmodelᚐUserB
 	return ret
 }
 
-func (ec *executionContext) marshalNUserBudget2ᚖappᚋgraphᚋmodelᚐUserBudget(ctx context.Context, sel ast.SelectionSet, v *model.UserBudget) graphql.Marshaler {
+func (ec *executionContext) marshalNUserBudget2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐUserBudget(ctx context.Context, sel ast.SelectionSet, v *model.UserBudget) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -7882,14 +7949,14 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return res
 }
 
-func (ec *executionContext) marshalOBudget2ᚖappᚋgraphᚋmodelᚐBudget(ctx context.Context, sel ast.SelectionSet, v *model.Budget) graphql.Marshaler {
+func (ec *executionContext) marshalOBudget2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐBudget(ctx context.Context, sel ast.SelectionSet, v *model.Budget) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Budget(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCategory2ᚖappᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v *model.Category) graphql.Marshaler {
+func (ec *executionContext) marshalOCategory2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v *model.Category) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -7944,14 +8011,14 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	return res
 }
 
-func (ec *executionContext) marshalOTransaction2ᚖappᚋgraphᚋmodelᚐTransaction(ctx context.Context, sel ast.SelectionSet, v *model.Transaction) graphql.Marshaler {
+func (ec *executionContext) marshalOTransaction2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐTransaction(ctx context.Context, sel ast.SelectionSet, v *model.Transaction) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Transaction(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOUser2ᚖappᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v *model.User) graphql.Marshaler {
+func (ec *executionContext) marshalOUser2ᚖappᚋinternalᚋappᚋgraphᚋmodelᚐUser(ctx context.Context, sel ast.SelectionSet, v *model.User) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

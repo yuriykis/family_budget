@@ -49,10 +49,10 @@ type NewUserBudgetInput struct {
 }
 
 type NewUserInput struct {
-	FirstName         string `json:"firstName"`
-	LastName          string `json:"lastName"`
-	Email             string `json:"email"`
-	EncryptedPassword string `json:"encryptedPassword"`
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+	Email     string `json:"email"`
+	Password  string `json:"password"`
 }
 
 type Transaction struct {
@@ -91,10 +91,10 @@ type UpdateUserBudgetInput struct {
 }
 
 type UpdateUserInput struct {
-	FirstName         *string `json:"firstName"`
-	LastName          *string `json:"lastName"`
-	Email             *string `json:"email"`
-	EncryptedPassword *string `json:"encryptedPassword"`
+	FirstName *string `json:"firstName"`
+	LastName  *string `json:"lastName"`
+	Email     *string `json:"email"`
+	Password  *string `json:"password"`
 }
 
 type User struct {
@@ -102,6 +102,7 @@ type User struct {
 	FirstName         string    `json:"firstName"`
 	LastName          string    `json:"lastName"`
 	Email             string    `json:"email"`
+	Password          string    `json:"password"`
 	EncryptedPassword string    `json:"encryptedPassword"`
 	Budgets           []*Budget `json:"budgets"`
 }
