@@ -26,6 +26,27 @@ func (r *UserRepository) Create(user model.User) (int, error) {
 	return user.ID, err
 }
 
+func (r *UserRepository) Update(user model.User) error {
+	_, err := r.store.db.Exec(
+		"UPDATE users SET first_name = $1, last_name = $2, email = $3 WHERE id = $4",
+		user.FirstName,
+		user.LastName,
+		user.Email,
+		user.ID,
+	)
+
+	return err
+}
+
+func (r *UserRepository) Delete(id int) error {
+	_, err := r.store.db.Exec(
+		"DELETE FROM users WHERE id = $1",
+		id,
+	)
+
+	return err
+}
+
 func (r *UserRepository) AuthCheck(email string, password string) (string, error) {
 
 	var user model.User

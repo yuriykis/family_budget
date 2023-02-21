@@ -36,12 +36,40 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUserIn
 
 // UpdateUser is the resolver for the updateUser field.
 func (r *mutationResolver) UpdateUser(ctx context.Context, id string, input model.UpdateUserInput) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: UpdateUser - updateUser"))
+	userId, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	user := mainModel.User{
+		ID:        int(userId),
+		FirstName: *input.FirstName,
+		LastName:  *input.LastName,
+		Email:     *input.Email,
+		Password:  *input.Password,
+	}
+	err = r.store.User().Update(user)
+	if err != nil {
+		return nil, err
+	}
+	return &model.User{
+		ID:        fmt.Sprintf("%d", user.ID),
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		Email:     user.Email,
+	}, nil
 }
 
 // DeleteUser is the resolver for the deleteUser field.
 func (r *mutationResolver) DeleteUser(ctx context.Context, id string) (*bool, error) {
-	panic(fmt.Errorf("not implemented: DeleteUser - deleteUser"))
+	userId, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	err = r.store.User().Delete(int(userId))
+	if err != nil {
+		return nil, err
+	}
+	return &[]bool{true}[0], nil
 }
 
 // CreateBudget is the resolver for the createBudget field.

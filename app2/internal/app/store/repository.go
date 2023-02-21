@@ -7,6 +7,8 @@ import (
 
 type IUserRepository interface {
 	Create(model.User) (int, error)
+	Update(model.User) error
+	Delete(int) error
 	Find(int) (*model.User, error)
 	AuthCheck(string, string) (string, error)
 	FindAll() ([]model.User, error)
