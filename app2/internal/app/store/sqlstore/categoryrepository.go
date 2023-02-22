@@ -58,3 +58,22 @@ func (r *CategoryRepository) Find(categoryID int) (*model.Category, error) {
 
 	return &category, err
 }
+
+func (r *CategoryRepository) Edit(category model.Category) error {
+	_, err := r.store.db.Exec(
+		"UPDATE categories SET name = $1, description = $2 WHERE id = $3",
+		category.Name,
+		category.Description,
+		category.ID,
+	)
+	return err
+}
+
+func (r *CategoryRepository) Delete(categoryID int) error {
+
+	_, err := r.store.db.Exec(
+		"DELETE FROM categories WHERE id = $1",
+		categoryID,
+	)
+	return err
+}

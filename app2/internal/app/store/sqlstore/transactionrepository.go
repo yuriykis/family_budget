@@ -95,3 +95,24 @@ func (r *TransactionRepository) DeleteByBudget(budgetID int) error {
 	_, err := r.store.db.Exec("DELETE FROM transactions WHERE budget_id = $1", budgetID)
 	return err
 }
+
+func (r *TransactionRepository) Find(id int) (*model.Transaction, error) {
+	transaction := &model.Transaction{}
+	var createdAt string
+	var updatedAt string
+	err := r.store.db.QueryRow(
+		"SELECT * FROM transactions WHERE id = $1",
+		id,
+	).Scan(
+		&transaction.ID,
+		&transaction.Title,
+		&transaction.BudgetID,
+		&transaction.CategoryID,
+		&transaction.Amount,
+		&transaction.Type,
+		&createdAt,
+		&updatedAt,
+	)
+
+	return transaction, err
+}

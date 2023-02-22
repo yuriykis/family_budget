@@ -74,62 +74,153 @@ func (r *mutationResolver) DeleteUser(ctx context.Context, id string) (*bool, er
 
 // CreateBudget is the resolver for the createBudget field.
 func (r *mutationResolver) CreateBudget(ctx context.Context, input model.NewBudgetInput) (*model.Budget, error) {
-	panic(fmt.Errorf("not implemented: CreateBudget - createBudget"))
+	// create budget
+	budget := mainModel.Budget{
+		Name:        input.Name,
+		Description: input.Description,
+		Amount:      input.Amount,
+	}
+	// get user id from context
+	userId := ctx.Value("userId").(int)
+	budgetId, err := r.store.Budget().Create(budget, uint(userId))
+	if err != nil {
+		return nil, err
+	}
+	budget.ID = budgetId
+	return &model.Budget{
+		ID:          fmt.Sprintf("%d", budget.ID),
+		Name:        budget.Name,
+		Description: budget.Description,
+		Amount:      budget.Amount,
+	}, nil
 }
 
 // UpdateBudget is the resolver for the updateBudget field.
 func (r *mutationResolver) UpdateBudget(ctx context.Context, id string, input model.UpdateBudgetInput) (*model.Budget, error) {
-	panic(fmt.Errorf("not implemented: UpdateBudget - updateBudget"))
+	budgetId, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	budget := mainModel.Budget{
+		ID:          int(budgetId),
+		Name:        *input.Name,
+		Description: *input.Description,
+		Amount:      *input.Amount,
+	}
+	err = r.store.Budget().Edit(budget)
+	if err != nil {
+		return nil, err
+	}
+	return &model.Budget{
+		ID:          fmt.Sprintf("%d", budget.ID),
+		Name:        budget.Name,
+		Description: budget.Description,
+		Amount:      budget.Amount,
+	}, nil
 }
 
 // DeleteBudget is the resolver for the deleteBudget field.
 func (r *mutationResolver) DeleteBudget(ctx context.Context, id string) (*bool, error) {
-	panic(fmt.Errorf("not implemented: DeleteBudget - deleteBudget"))
+	budgetId, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	err = r.store.Budget().Delete(int(budgetId))
+	if err != nil {
+		return nil, err
+	}
+	return &[]bool{true}[0], nil
 }
 
 // CreateCategory is the resolver for the createCategory field.
 func (r *mutationResolver) CreateCategory(ctx context.Context, input model.NewCategoryInput) (*model.Category, error) {
-	panic(fmt.Errorf("not implemented: CreateCategory - createCategory"))
+	category := mainModel.Category{
+		Name:        input.Name,
+		Description: input.Description,
+	}
+	categoryId, err := r.store.Category().Create(category)
+	if err != nil {
+		return nil, err
+	}
+	category.ID = categoryId
+	return &model.Category{
+		ID:          fmt.Sprintf("%d", category.ID),
+		Name:        category.Name,
+		Description: category.Description,
+	}, nil
 }
 
 // UpdateCategory is the resolver for the updateCategory field.
 func (r *mutationResolver) UpdateCategory(ctx context.Context, id string, input model.UpdateCategoryInput) (*model.Category, error) {
-	panic(fmt.Errorf("not implemented: UpdateCategory - updateCategory"))
+	categoryId, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	category := mainModel.Category{
+		ID:          int(categoryId),
+		Name:        *input.Name,
+		Description: *input.Description,
+	}
+	err = r.store.Category().Edit(category)
+	if err != nil {
+		return nil, err
+	}
+	return &model.Category{
+		ID:          fmt.Sprintf("%d", category.ID),
+		Name:        category.Name,
+		Description: category.Description,
+	}, nil
 }
 
 // DeleteCategory is the resolver for the deleteCategory field.
 func (r *mutationResolver) DeleteCategory(ctx context.Context, id string) (*bool, error) {
-	panic(fmt.Errorf("not implemented: DeleteCategory - deleteCategory"))
+	categoryId, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	err = r.store.Category().Delete(int(categoryId))
+	if err != nil {
+		return nil, err
+	}
+	return &[]bool{true}[0], nil
 }
 
 // CreateTransaction is the resolver for the createTransaction field.
 func (r *mutationResolver) CreateTransaction(ctx context.Context, input model.NewTransactionInput) (*model.Transaction, error) {
-	panic(fmt.Errorf("not implemented: CreateTransaction - createTransaction"))
+	panic(fmt.Errorf("not implemented"))
 }
 
 // UpdateTransaction is the resolver for the updateTransaction field.
 func (r *mutationResolver) UpdateTransaction(ctx context.Context, id string, input model.UpdateTransactionInput) (*model.Transaction, error) {
-	panic(fmt.Errorf("not implemented: UpdateTransaction - updateTransaction"))
+	panic(fmt.Errorf("not implemented"))
 }
 
 // DeleteTransaction is the resolver for the deleteTransaction field.
 func (r *mutationResolver) DeleteTransaction(ctx context.Context, id string) (*bool, error) {
-	panic(fmt.Errorf("not implemented: DeleteTransaction - deleteTransaction"))
+	transactionId, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	err = r.store.Transaction().Delete(int(transactionId))
+	if err != nil {
+		return nil, err
+	}
+	return &[]bool{true}[0], nil
 }
 
 // CreateUserBudget is the resolver for the createUserBudget field.
 func (r *mutationResolver) CreateUserBudget(ctx context.Context, input model.NewUserBudgetInput) (*model.UserBudget, error) {
-	panic(fmt.Errorf("not implemented: CreateUserBudget - createUserBudget"))
+	panic(fmt.Errorf("not implemented"))
 }
 
 // UpdateUserBudget is the resolver for the updateUserBudget field.
 func (r *mutationResolver) UpdateUserBudget(ctx context.Context, id string, input model.UpdateUserBudgetInput) (*model.UserBudget, error) {
-	panic(fmt.Errorf("not implemented: UpdateUserBudget - updateUserBudget"))
+	panic(fmt.Errorf("not implemented"))
 }
 
 // DeleteUserBudget is the resolver for the deleteUserBudget field.
 func (r *mutationResolver) DeleteUserBudget(ctx context.Context, id string) (*bool, error) {
-	panic(fmt.Errorf("not implemented: DeleteUserBudget - deleteUserBudget"))
+	panic(fmt.Errorf("not implemented"))
 }
 
 // User is the resolver for the user field.
@@ -153,17 +244,55 @@ func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error
 
 // Budget is the resolver for the budget field.
 func (r *queryResolver) Budget(ctx context.Context, id string) (*model.Budget, error) {
-	panic(fmt.Errorf("not implemented: Budget - budget"))
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		return nil, err
+	}
+	budget, err := r.store.Budget().Find(intID)
+	if err != nil {
+		return nil, err
+	}
+	return &model.Budget{
+		ID:   fmt.Sprintf("%d", budget.ID),
+		Name: budget.Name,
+	}, nil
 }
 
 // Category is the resolver for the category field.
 func (r *queryResolver) Category(ctx context.Context, id string) (*model.Category, error) {
-	panic(fmt.Errorf("not implemented: Category - category"))
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		return nil, err
+	}
+
+	category, err := r.store.Category().Find(intID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.Category{
+		ID:   fmt.Sprintf("%d", category.ID),
+		Name: category.Name,
+	}, nil
 }
 
 // Transaction is the resolver for the transaction field.
 func (r *queryResolver) Transaction(ctx context.Context, id string) (*model.Transaction, error) {
-	panic(fmt.Errorf("not implemented: Transaction - transaction"))
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		return nil, err
+	}
+	transaction, err := r.store.Transaction().Find(intID)
+	if err != nil {
+		return nil, err
+	}
+	return &model.Transaction{
+		ID:     fmt.Sprintf("%d", transaction.ID),
+		Title:  transaction.Title,
+		Amount: transaction.Amount,
+		Type:   transaction.Type,
+	}, nil
+
 }
 
 // Mutation returns MutationResolver implementation.

@@ -27,10 +27,13 @@ type ICategoryRepository interface {
 	Create(model.Category) (int, error)
 	FindAll() ([]model.Category, error)
 	Find(int) (*model.Category, error)
+	Edit(model.Category) error
+	Delete(int) error
 }
 
 type ITransactionRepository interface {
 	Create(model.Transaction, int) (int, error)
+	Find(int) (*model.Transaction, error)
 	FindAll(int) ([]model.Transaction, error)
 	FindByCategory(int) ([]model.Transaction, error)
 	Delete(int) error
