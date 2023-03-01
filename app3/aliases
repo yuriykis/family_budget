@@ -1,0 +1,2 @@
+alias makemigrations="migrate create -ext sql -dir /Users/yuriykis/Projects/family_budget/app2/migrations"
+alias appmigrate='migrate -path /Users/yuriykis/Projects/family_budget/app2/migrations -database  "postgres://postgres:postgres@localhost/example?sslmode=disable"'
