@@ -14,18 +14,18 @@ import (
 )
 
 type server struct {
-	router          *gin.Engine
-	logger          *log.Logger
-	serviceHandler  handlers.IServiceHandler
-	categoryHandler handlers.ICategoryHandler
+	router               *gin.Engine
+	logger               *log.Logger
+	serviceHealthHandler handlers.IServiceHealthHandler
+	categoryHandler      handlers.ICategoryHandler
 }
 
 func newServer(store store.IStore) *server {
 	s := &server{
-		router:          gin.Default(),
-		logger:          log.New(),
-		serviceHandler:  handler.NewServiceHandler(),
-		categoryHandler: handler.NewCategoryHandler(store),
+		router:               gin.Default(),
+		logger:               log.New(),
+		serviceHealthHandler: handler.NewServiceHealthHandler(),
+		categoryHandler:      handler.NewCategoryHandler(store),
 	}
 	s.configureRouter()
 	return s
@@ -36,7 +36,7 @@ func (s *server) configureRouter() {
 	s.router.Use(middlewares.CorsMiddleware())
 
 	public := s.router.Group("/api")
-	public.GET("/healthcheck", s.serviceHandler.CheckHealth)
+	public.GET("/healthcheck", s.serviceHealthHandler.CheckHealth)
 
 	protected := s.router.Group("/api/auth")
 	protected.Use(middlewares.JwtMiddleware())

@@ -11,6 +11,6 @@ type IBudgetHandler interface {
 	ShareBudget(c *gin.Context)
 }
 
-type IServiceHandler interface {
+type IServiceHealthHandler interface {
 	CheckHealth(c *gin.Context)
 }

@@ -1,6 +1,7 @@
 package sqlstore
 
 import (
+	"fmt"
 	"userservice/internal/app/model"
 	"userservice/internal/app/utils/token"
 )
@@ -9,10 +10,10 @@ type UserRepository struct {
 	store *Store
 }
 
-func (r *UserRepository) Create(user model.User) (int, error) {
+func (r *UserRepository) Create(user model.User) (string, error) {
 
 	if err := user.BeforeCreate(); err != nil {
-		return 0, err
+		return "", err
 	}
 
 	err := r.store.db.QueryRow(
@@ -23,7 +24,7 @@ func (r *UserRepository) Create(user model.User) (int, error) {
 		user.EncryptedPassword,
 	).Scan(&user.ID)
 
-	return user.ID, err
+	return fmt.Sprint(user.ID), err
 }
 
 func (r *UserRepository) Update(user model.User) error {
@@ -71,7 +72,7 @@ func (r *UserRepository) AuthCheck(email string, password string) (string, error
 		return "", err
 	}
 
-	token, err := token.GenerateToken(uint(user.ID))
+	token, err := token.GenerateToken(user.ID)
 
 	if err != nil {
 		return "", err

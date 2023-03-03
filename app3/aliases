@@ -1,2 +1,4 @@
-alias makemigrations="migrate create -ext sql -dir /Users/yuriykis/Projects/family_budget/app2/migrations"
-alias appmigrate='migrate -path /Users/yuriykis/Projects/family_budget/app2/migrations -database  "postgres://postgres:postgres@localhost/example?sslmode=disable"'
+alias sqlmakemigrations="migrate create -ext sql -dir /Users/yuriykis/Projects/family_budget/app2/migrations"
+alias nosqlmakemigrations="migrate create -ext json -dir /Users/yuriykis/Projects/family_budget/app3/user-service/migrations"
+alias sqlmigrate='migrate -path /Users/yuriykis/Projects/family_budget/app2/migrations -database  "postgres://postgres:postgres@localhost/example?sslmode=disable"'
+alias nosqlmigrate='migrate -path /Users/yuriykis/Projects/family_budget/app3/user-service/migrations -database  "mongodb://127.0.0.1:27017/users"'

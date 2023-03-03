@@ -1,3 +1,4 @@
 bind_add: ":8080"
 log_level: "debug"
-database_url: "host=localhost dbname=example user=postgres password=postgres sslmode=disable"
+# database_url: "host=localhost dbname=example user=postgres password=postgres sslmode=disable"
+database_url: "mongodb://localhost:27017"

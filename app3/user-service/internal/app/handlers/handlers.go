@@ -9,6 +9,6 @@ type IUserHandler interface {
 	GetUserByID(c *gin.Context)
 }
 
-type IServiceHandler interface {
+type IServiceHealthHandler interface {
 	CheckHealth(c *gin.Context)
 }

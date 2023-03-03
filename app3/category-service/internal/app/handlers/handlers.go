@@ -2,7 +2,7 @@ package handlers
 
 import "github.com/gin-gonic/gin"
 
-type IServiceHandler interface {
+type IServiceHealthHandler interface {
 	CheckHealth(c *gin.Context)
 }
 
