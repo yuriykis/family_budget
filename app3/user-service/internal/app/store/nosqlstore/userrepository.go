@@ -6,6 +6,7 @@ import (
 	"userservice/internal/app/model"
 	"userservice/internal/app/utils/token"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -63,7 +64,6 @@ func (r *UserRepository) Find(id int) (*model.User, error) {
 func (r *UserRepository) AuthCheck(email string, password string) (string, error) {
 	var user model.User
 	user.Email = email
-	user.Password = password
 
 	if err := user.BeforeCreate(); err != nil {
 		return "", err
@@ -71,13 +71,13 @@ func (r *UserRepository) AuthCheck(email string, password string) (string, error
 
 	err := r.store.db.Database("users").
 		Collection("users").
-		FindOne(context.Background(), model.User{Email: user.Email}).
+		FindOne(context.Background(), bson.M{"email": user.Email}).
 		Decode(&user)
 	if err != nil {
 		return "", err
 	}
 
-	if user.EncryptedPassword != user.Password {
+	if user.ComparePassword(password) != nil {
 		return "", errors.New("invalid password")
 	}
 
