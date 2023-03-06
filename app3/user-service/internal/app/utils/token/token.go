@@ -36,7 +36,7 @@ func TokenValid(c *gin.Context) error {
 	return nil
 }
 
-func ExtractTokenID(c *gin.Context) (uint, error) {
+func ExtractTokenID(c *gin.Context) (string, error) {
 	tokenString := ExtractToken(c)
 	tokenClaims, err := jwt.ParseWithClaims(
 		tokenString,
@@ -46,10 +46,10 @@ func ExtractTokenID(c *gin.Context) (uint, error) {
 		},
 	)
 	if err != nil {
-		return 0, err
+		return "", err
 	}
 	claims := tokenClaims.Claims.(*jwt.MapClaims)
-	user_id := uint((*claims)["sub"].(float64))
+	user_id := (*claims)["sub"].(string)
 	return user_id, nil
 }
 

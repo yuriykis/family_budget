@@ -1,14 +1,16 @@
 package model
 
-import "golang.org/x/crypto/bcrypt"
+import (
+	"golang.org/x/crypto/bcrypt"
+)
 
 type User struct {
-	ID                string `json:"id"`
-	FirstName         string `json:"first_name"`
-	LastName          string `json:"last_name"`
-	Email             string `json:"email"`
-	Password          string `json:"password,omitempty"`
-	EncryptedPassword string `json:"-"`
+	ID                string `json:"id"                 bson:"_id"`
+	FirstName         string `json:"first_name"         bson:"first_name"`
+	LastName          string `json:"last_name"          bson:"last_name"`
+	Email             string `json:"email"              bson:"email"`
+	Password          string `json:"password,omitempty" bson:"-"`
+	EncryptedPassword string `json:"-"                  bson:"encrypted_password"`
 }
 
 func (u *User) BeforeCreate() error {

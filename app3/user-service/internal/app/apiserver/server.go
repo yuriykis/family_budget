@@ -45,6 +45,8 @@ func (s *server) configureRouter() {
 	protected.GET("/user", s.userHandler.GetUser)
 	protected.GET("/user/:user_id", s.userHandler.GetUserByID)
 
+	protected.PUT("/user/:user_id", s.userHandler.UpdateUser)
+	protected.DELETE("/user/:user_id", s.userHandler.DeleteUser)
 }
 
 func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {

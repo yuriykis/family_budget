@@ -39,7 +39,7 @@ func (r *UserRepository) Update(user model.User) error {
 	return err
 }
 
-func (r *UserRepository) Delete(id int) error {
+func (r *UserRepository) Delete(id string) error {
 	_, err := r.store.db.Exec(
 		"DELETE FROM users WHERE id = $1",
 		id,
@@ -81,7 +81,7 @@ func (r *UserRepository) AuthCheck(email string, password string) (string, error
 	return token, nil
 }
 
-func (r *UserRepository) Find(id int) (*model.User, error) {
+func (r *UserRepository) Find(id string) (*model.User, error) {
 	u := &model.User{}
 	if err := r.store.db.QueryRow(
 		"SELECT id, first_name, last_name, email FROM users WHERE id = $1",

@@ -7,6 +7,8 @@ type IUserHandler interface {
 	AthenticateUser(c *gin.Context)
 	GetUser(c *gin.Context)
 	GetUserByID(c *gin.Context)
+	UpdateUser(c *gin.Context)
+	DeleteUser(c *gin.Context)
 }
 
 type IServiceHealthHandler interface {

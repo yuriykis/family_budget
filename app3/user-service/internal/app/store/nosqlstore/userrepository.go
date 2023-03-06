@@ -19,11 +19,12 @@ func (r *UserRepository) Create(user model.User) (string, error) {
 		return "", err
 	}
 
-	doc := model.User{
-		FirstName:         user.FirstName,
-		LastName:          user.LastName,
-		Email:             user.Email,
-		EncryptedPassword: user.EncryptedPassword,
+	doc := bson.M{
+		"_id":                primitive.NewObjectID(),
+		"first_name":         user.FirstName,
+		"last_name":          user.LastName,
+		"email":              user.Email,
+		"encrypted_password": user.EncryptedPassword,
 	}
 
 	res, err := r.store.db.Database("users").
@@ -33,15 +34,39 @@ func (r *UserRepository) Create(user model.User) (string, error) {
 		return "", err
 	}
 
-	id := res.InsertedID.(primitive.ObjectID).Hex()
-
+	objID, ok := res.InsertedID.(primitive.ObjectID)
+	if !ok {
+		return "", errors.New("id is not an object id")
+	}
+	id := objID.Hex()
 	return id, nil
 }
 
 func (r *UserRepository) Update(user model.User) error {
+	objID, err := primitive.ObjectIDFromHex(user.ID)
+	if err != nil {
+		return err
+	}
+	updatedUser := bson.M{}
+	if user.FirstName != "" {
+		updatedUser["first_name"] = user.FirstName
+	}
+	if user.LastName != "" {
+		updatedUser["last_name"] = user.LastName
+	}
+	if user.Email != "" {
+		updatedUser["email"] = user.Email
+	}
+	if user.Password != "" {
+		if err := user.BeforeCreate(); err != nil {
+			return err
+		}
+		updatedUser["encrypted_password"] = user.EncryptedPassword
+	}
+
 	res, err := r.store.db.Database("users").
 		Collection("users").
-		UpdateOne(context.Background(), model.User{ID: user.ID}, user)
+		UpdateOne(context.Background(), bson.M{"_id": objID}, bson.M{"$set": updatedUser})
 	if err != nil {
 		return err
 	}
@@ -53,21 +78,39 @@ func (r *UserRepository) Update(user model.User) error {
 	return nil
 }
 
-func (r *UserRepository) Delete(id int) error {
+func (r *UserRepository) Delete(id string) error {
+	objId, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return err
+	}
+	res := r.store.db.Database("users").
+		Collection("users").
+		FindOneAndDelete(context.Background(), bson.M{"_id": objId})
+	if res.Err() != nil {
+		return res.Err()
+	}
 	return nil
 }
 
-func (r *UserRepository) Find(id int) (*model.User, error) {
-	return nil, nil
+func (r *UserRepository) Find(id string) (*model.User, error) {
+	objId, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return nil, err
+	}
+	var user model.User
+	err = r.store.db.Database("users").
+		Collection("users").
+		FindOne(context.Background(), bson.M{"_id": objId}).
+		Decode(&user)
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
 }
 
 func (r *UserRepository) AuthCheck(email string, password string) (string, error) {
 	var user model.User
 	user.Email = email
-
-	if err := user.BeforeCreate(); err != nil {
-		return "", err
-	}
 
 	err := r.store.db.Database("users").
 		Collection("users").
@@ -85,5 +128,17 @@ func (r *UserRepository) AuthCheck(email string, password string) (string, error
 }
 
 func (r *UserRepository) FindAll() ([]model.User, error) {
-	return nil, nil
+	var users []model.User
+	cursor, err := r.store.db.Database("users").
+		Collection("users").
+		Find(context.Background(), bson.M{})
+	if err != nil {
+		return nil, err
+	}
+
+	if err := cursor.All(context.Background(), &users); err != nil {
+		return nil, err
+	}
+
+	return users, nil
 }
