@@ -1,9 +1,9 @@
 package requests
 
 type CreateBudgetRequest struct {
-	Name        string `json:"name"        binding:"required"`
-	Description string `json:"description" binding:"required"`
-	Amount      string `json:"amount"      binding:"required"`
+	Name        string  `json:"name"        binding:"required"`
+	Description string  `json:"description" binding:"required"`
+	Amount      float64 `json:"amount"      binding:"required"`
 }
 
 type EditBudgetRequest struct {

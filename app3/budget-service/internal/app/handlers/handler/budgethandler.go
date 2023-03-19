@@ -30,15 +30,10 @@ func (bh *BudgetHandler) CreateBudget(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	amountFloat, err := strconv.ParseFloat(req.Amount, 64)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
 	b := model.Budget{
 		Name:        req.Name,
 		Description: req.Description,
-		Amount:      amountFloat,
+		Amount:      req.Amount,
 	}
 	id, err := bh.store.Budget().Create(b, userID)
 	if err != nil {
@@ -51,12 +46,7 @@ func (bh *BudgetHandler) CreateBudget(c *gin.Context) {
 
 func (bh *BudgetHandler) GetBudgetByID(c *gin.Context) {
 	id := c.Param("budget_id")
-	id_int, err := strconv.Atoi(id)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	budget, err := bh.store.Budget().Find(id_int)
+	budget, err := bh.store.Budget().Find(id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -75,23 +65,18 @@ func (bh *BudgetHandler) GetAllBudgets(c *gin.Context) {
 
 func (bh *BudgetHandler) EditBudget(c *gin.Context) {
 	id := c.Param("budget_id")
-	id_int, err := strconv.Atoi(id)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
 	var req requests.EditBudgetRequest
 	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	b := model.Budget{
-		ID:          id_int,
+		ID:          id,
 		Name:        req.Name,
 		Description: req.Description,
 		Amount:      req.Amount,
 	}
-	err = bh.store.Budget().Edit(b)
+	err := bh.store.Budget().Edit(b)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

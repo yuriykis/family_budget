@@ -3,19 +3,20 @@ package sqlstore
 import (
 	"budgetservice/internal/app/model"
 	"budgetservice/internal/app/response"
+	"fmt"
 )
 
 type BudgetRepository struct {
 	store *Store
 }
 
-func (r *BudgetRepository) Create(budget model.Budget, userID uint) (int, error) {
+func (r *BudgetRepository) Create(budget model.Budget, userID string) (string, error) {
 
 	// sql transaction creates a new budget and user_budget records
 
 	tx, err := r.store.db.Begin()
 	if err != nil {
-		return 0, err
+		return "", err
 	}
 
 	var id int
@@ -28,7 +29,7 @@ func (r *BudgetRepository) Create(budget model.Budget, userID uint) (int, error)
 
 	if err != nil {
 		tx.Rollback()
-		return 0, err
+		return "", err
 	}
 
 	_, err = tx.Exec(
@@ -41,15 +42,15 @@ func (r *BudgetRepository) Create(budget model.Budget, userID uint) (int, error)
 
 	if err != nil {
 		tx.Rollback()
-		return 0, err
+		return "", err
 	}
 
 	err = tx.Commit()
 	if err != nil {
-		return 0, err
+		return "", err
 	}
 
-	return id, nil
+	return fmt.Sprint(id), nil
 }
 
 func (r *BudgetRepository) FindAll() ([]response.BudgetResponse, error) {
@@ -113,8 +114,8 @@ func (r *BudgetRepository) FindAll() ([]response.BudgetResponse, error) {
 	panic("not implemented")
 }
 
-func (r *BudgetRepository) Find(id int) (*model.Budget, error) {
-	budget := &model.Budget{}
+func (r *BudgetRepository) Find(id string) (*response.BudgetResponse, error) {
+	budget := &response.BudgetResponse{}
 	err := r.store.db.QueryRow(
 		"SELECT id, name, description, amount FROM budgets WHERE id = $1",
 		id,

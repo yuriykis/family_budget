@@ -6,9 +6,9 @@ import (
 )
 
 type IBudgetRepository interface {
-	Create(model.Budget, uint) (int, error)
+	Create(model.Budget, string) (string, error)
 	FindAll() ([]response.BudgetResponse, error)
-	Find(int) (*model.Budget, error)
+	Find(string) (*response.BudgetResponse, error)
 	Edit(model.Budget) error
 	Delete(int) error
 	Share(int, int) error
