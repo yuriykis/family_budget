@@ -9,4 +9,5 @@ type IServiceHealthHandler interface {
 type ICategoryHandler interface {
 	CreateCategory(c *gin.Context)
 	FindAllCategories(c *gin.Context)
+	FindCategoryByID(c *gin.Context)
 }

@@ -46,3 +46,12 @@ func (ch *CategoryHandler) FindAllCategories(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, categories)
 }
+
+func (ch *CategoryHandler) FindCategoryByID(c *gin.Context) {
+	category, err := ch.store.Category().Find(c.Param("category_id"))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, category)
+}

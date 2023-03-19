@@ -43,6 +43,7 @@ func (s *server) configureRouter() {
 
 	protected.POST("/category", s.categoryHandler.CreateCategory)
 	protected.GET("/category", s.categoryHandler.FindAllCategories)
+	protected.GET("/category/:category_id", s.categoryHandler.FindCategoryByID)
 }
 
 func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {

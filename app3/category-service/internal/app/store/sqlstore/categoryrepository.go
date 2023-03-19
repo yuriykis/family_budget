@@ -1,19 +1,21 @@
 package sqlstore
 
-import "categoryservice/internal/app/model"
+import (
+	"categoryservice/internal/app/model"
+	"fmt"
+)
 
 type CategoryRepository struct {
 	store *Store
 }
 
-func (r *CategoryRepository) Create(category model.Category) (int, error) {
+func (r *CategoryRepository) Create(category model.Category) (string, error) {
 	err := r.store.db.QueryRow(
 		"INSERT INTO categories (name, description) VALUES ($1, $2) RETURNING id",
 		category.Name,
 		category.Description,
 	).Scan(&category.ID)
-
-	return category.ID, err
+	return fmt.Sprint(category.ID), err
 }
 
 func (r *CategoryRepository) FindAll() ([]model.Category, error) {
@@ -45,9 +47,9 @@ func (r *CategoryRepository) FindAll() ([]model.Category, error) {
 	return categories, nil
 }
 
-func (r *CategoryRepository) Find(categoryID int) (*model.Category, error) {
+func (r *CategoryRepository) Find(categoryID string) (*model.Category, error) {
 	category := model.Category{}
-	category.ID = categoryID
+	category.ID = fmt.Sprint(categoryID)
 	err := r.store.db.QueryRow(
 		"SELECT * FROM categories WHERE id = $1",
 	).Scan(
