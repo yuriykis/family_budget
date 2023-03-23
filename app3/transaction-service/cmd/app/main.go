@@ -4,13 +4,14 @@ import (
 	"flag"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"transactionservice/internal/app/apiserver"
 
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v2"
 )
 
-var configPath = "server.yml"
+var configPath = "../../configs/server.yml"
 
 func init() {
 	flag.StringVar(&configPath, "config-path", configPath, "path to config file")
@@ -18,10 +19,11 @@ func init() {
 
 func main() {
 	config := apiserver.NewConfig()
-	mode := os.Getenv("GIN_MODE")
-	if mode == "debug" {
-		configPath = "../../configs/server.yml"
+	wd, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
 	}
+	configPath := filepath.Join(wd, configPath)
 	configFile, err := ioutil.ReadFile(configPath)
 	if err != nil {
 		log.Fatal(err)
