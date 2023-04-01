@@ -1,0 +1,114 @@
+version: '3.9'
+
+services:
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    depends_on:
+      - user-service-db
+    environment:
+      DB_HOST: "user-service-db"
+      DB_PORT: "27018"
+      DB_NAME: "users"
+    networks:
+      - family-budget-app-network
+
+  budget-service:
+    build:
+      context: ./budget-service
+      dockerfile: Dockerfile
+    ports:
+      - "8002:8002"
+    depends_on:
+      - budget-service-db
+    environment:
+      DB_HOST: "budget-service-db"
+      DB_PORT: "27019"
+      DB_NAME: "budgets"
+    networks:
+      - family-budget-app-network
+
+  category-service:
+    build:
+      context: ./category-service
+      dockerfile: Dockerfile
+    ports:
+      - "8003:8003"
+    depends_on:
+      - category-service-db
+    environment:
+      DB_HOST: "category-service-db"
+      DB_PORT: "27020"
+      DB_NAME: "categories"
+    networks:
+      - family-budget-app-network
+
+  transaction-service:
+    build:
+      context: ./transaction-service
+      dockerfile: Dockerfile
+    ports:
+      - "8004:8004"
+    depends_on:
+      - transaction-service-db
+    environment:
+      DB_HOST: "transaction-service-db"
+      DB_PORT: "27021"
+      DB_NAME: "transactions"
+    networks:
+      - family-budget-app-network
+
+  user-service-db:
+    image:  mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "mongo"
+      MONGO_INITDB_ROOT_PASSWORD: "mongo"
+      MONGO_INITDB_DATABASE: "users"
+    ports:
+      - "27018:27017"
+    networks:
+      - family-budget-app-network
+
+  budget-service-db:
+    image:  mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "mongo"
+      MONGO_INITDB_ROOT_PASSWORD: "mongo"
+      MONGO_INITDB_DATABASE: "budgets"
+    ports:
+      - "27019:27017"
+    networks:
+      - family-budget-app-network
+
+  category-service-db:
+    image:  mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "mongo"
+      MONGO_INITDB_ROOT_PASSWORD: "mongo"
+      MONGO_INITDB_DATABASE: "categories"
+    ports:
+      - "27020:27017"
+    networks:
+      - family-budget-app-network
+
+  transaction-service-db:
+    image:  mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "mongo"
+      MONGO_INITDB_ROOT_PASSWORD: "mongo"
+      MONGO_INITDB_DATABASE: "transactions"
+    ports:
+      - "27021:27017"
+    networks:
+      - family-budget-app-network
+
+networks:
+  family-budget-app-network:
+    driver: bridge

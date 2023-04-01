@@ -4,8 +4,6 @@ import (
 	"categoryservice/internal/app/apiserver"
 	"flag"
 	"io/ioutil"
-	"os"
-	"path/filepath"
 
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v2"
@@ -19,11 +17,12 @@ func init() {
 
 func main() {
 	config := apiserver.NewConfig()
-	wd, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-	configPath := filepath.Join(wd, configPath)
+	// wd, err := os.Getwd()
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// configPath := filepath.Join(wd, configPath)
+	flag.Parse()
 	configFile, err := ioutil.ReadFile(configPath)
 	if err != nil {
 		log.Fatal(err)

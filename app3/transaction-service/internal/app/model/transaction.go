@@ -1,10 +1,10 @@
 package model
 
 type Transaction struct {
-	ID         int     `json:"id"`
+	ID         string  `json:"id"`
 	Title      string  `json:"title"`
-	BudgetID   int     `json:"budget_id"`
-	CategoryID int     `json:"category_id"`
+	BudgetID   string  `json:"budget_id"`
+	CategoryID string  `json:"category_id"`
 	Amount     float64 `json:"amount"`
 	Type       string  `json:"type"`
 }
