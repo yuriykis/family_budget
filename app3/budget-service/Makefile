@@ -26,7 +26,7 @@ DOCKER_IMAGE_TAG=latest
 
 all: test build
 
-build:
+build: go-tidy
 	$(GOBUILD) -o $(BIN_DIR)/$(BINARY_NAME) -v $(CMD_DIR)/app
 
 clean:
@@ -43,6 +43,9 @@ run:
 
 deps:
 	$(GOGET) ./...
+
+go-tidy:
+	$(GOTIDY)
 
 build-linux:
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GOBUILD) -o $(BIN_DIR)/$(BINARY_UNIX) -v $(CMD_DIR)/app

@@ -10,6 +10,8 @@ services:
     depends_on:
       - user-service-db
     environment:
+      BIND_ADDR: ":8001"
+      LOG_LEVEL: "debug"
       DB_HOST: "user-service-db"
       DB_PORT: "27018"
       DB_NAME: "users"
@@ -25,6 +27,8 @@ services:
     depends_on:
       - budget-service-db
     environment:
+      BIND_ADDR: ":8002"
+      LOG_LEVEL: "debug"
       DB_HOST: "budget-service-db"
       DB_PORT: "27019"
       DB_NAME: "budgets"
@@ -40,6 +44,8 @@ services:
     depends_on:
       - category-service-db
     environment:
+      BIND_ADDR: ":8003"
+      LOG_LEVEL: "debug"
       DB_HOST: "category-service-db"
       DB_PORT: "27020"
       DB_NAME: "categories"
@@ -55,6 +61,8 @@ services:
     depends_on:
       - transaction-service-db
     environment:
+      BIND_ADDR: ":8004"
+      LOG_LEVEL: "debug"
       DB_HOST: "transaction-service-db"
       DB_PORT: "27021"
       DB_NAME: "transactions"

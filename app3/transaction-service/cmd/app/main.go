@@ -2,11 +2,10 @@ package main
 
 import (
 	"flag"
-	"io/ioutil"
+	"os"
 	"transactionservice/internal/app/apiserver"
 
 	log "github.com/sirupsen/logrus"
-	"gopkg.in/yaml.v2"
 )
 
 var configPath = "../../configs/server.yml"
@@ -22,15 +21,21 @@ func main() {
 	// 	log.Fatal(err)
 	// }
 	// configPath := filepath.Join(wd, configPath)
-	flag.Parse()
-	configFile, err := ioutil.ReadFile(configPath)
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = yaml.Unmarshal(configFile, config)
-	if err != nil {
-		log.Fatal(err)
-	}
+	// flag.Parse()
+	// configFile, err := ioutil.ReadFile(configPath)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// err = yaml.Unmarshal(configFile, config)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	config.BindAddr = os.Getenv("BIND_ADDR")
+	config.LogLevel = os.Getenv("LOG_LEVEL")
+	dbPort := os.Getenv("DB_PORT")
+	dbHost := os.Getenv("DB_HOST")
+	config.DatabaseURL = "mongodb://" + dbHost + ":" + dbPort
 
 	if err := apiserver.Start(config); err != nil {
 		log.Fatal(err)

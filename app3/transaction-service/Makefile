@@ -4,7 +4,7 @@ GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 GOTEST=$(GOCMD) test
 GOGET=$(GOCMD) get
-BINARY_NAME=category_service
+BINARY_NAME=transaction_service
 BINARY_UNIX=$(BINARY_NAME)_unix
 
 # Directories
@@ -18,7 +18,7 @@ TEST_DIR=./test
 BIN_DIR=./bin
 
 # Docker parameters
-DOCKER_IMAGE_NAME=category_service
+DOCKER_IMAGE_NAME=transaction_service
 DOCKER_IMAGE_TAG=latest
 
 # Targets
@@ -26,7 +26,7 @@ DOCKER_IMAGE_TAG=latest
 
 all: test build
 
-build:
+build: go-tidy
 	$(GOBUILD) -o $(BIN_DIR)/$(BINARY_NAME) -v $(CMD_DIR)/app
 
 clean:
@@ -44,6 +44,9 @@ run:
 deps:
 	$(GOGET) ./...
 
+go-tidy:
+	$(GOTIDY)
+	
 build-linux:
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GOBUILD) -o $(BIN_DIR)/$(BINARY_UNIX) -v $(CMD_DIR)/app
 
