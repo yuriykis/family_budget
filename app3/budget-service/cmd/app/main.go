@@ -35,7 +35,9 @@ func main() {
 	config.LogLevel = os.Getenv("LOG_LEVEL")
 	dbPort := os.Getenv("DB_PORT")
 	dbHost := os.Getenv("DB_HOST")
-	config.DatabaseURL = "mongodb://" + dbHost + ":" + dbPort
+	dbUser := os.Getenv("DB_USER")
+	dbPass := os.Getenv("DB_PASSWORD")
+	config.DatabaseURL = "mongodb://" + dbUser + ":" + dbPass + "@" + dbHost + ":" + dbPort
 
 	if err := apiserver.Start(config); err != nil {
 		log.Fatal(err)

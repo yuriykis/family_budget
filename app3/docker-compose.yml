@@ -6,15 +6,17 @@ services:
       context: ./user-service
       dockerfile: Dockerfile
     ports:
-      - "8001:8001"
+      - "${USER_SERVICE_PORT}:${USER_SERVICE_PORT}"
     depends_on:
       - user-service-db
     environment:
-      BIND_ADDR: ":8001"
-      LOG_LEVEL: "debug"
-      DB_HOST: "user-service-db"
-      DB_PORT: "27018"
-      DB_NAME: "users"
+      BIND_ADDR: ":${USER_SERVICE_PORT}"
+      LOG_LEVEL: "${USER_SERVICE_LOG_LEVEL}}"
+      DB_HOST: "${USER_SERVICE_DB_HOST}"
+      DB_PORT: "${USER_SERVICE_DB_PORT}"
+      DB_NAME: "${USER_SERVICE_DB_NAME}"
+      DB_USER: "${USER_SERVICE_DB_USER}"
+      DB_PASSWORD: "${USER_SERVICE_DB_PASSWORD}"
     networks:
       - family-budget-app-network
 
@@ -22,16 +24,18 @@ services:
     build:
       context: ./budget-service
       dockerfile: Dockerfile
-    ports:
-      - "8002:8002"
+    ports:  
+      - "${BUDGET_SERVICE_PORT}:${BUDGET_SERVICE_PORT}"
     depends_on:
       - budget-service-db
     environment:
-      BIND_ADDR: ":8002"
-      LOG_LEVEL: "debug"
-      DB_HOST: "budget-service-db"
-      DB_PORT: "27019"
-      DB_NAME: "budgets"
+      BIND_ADDR: ":${BUDGET_SERVICE_PORT}"
+      LOG_LEVEL: "${BUDGET_SERVICE_LOG_LEVEL}"
+      DB_HOST: "${BUDGET_SERVICE_DB_HOST}"
+      DB_PORT: "${BUDGET_SERVICE_DB_PORT}"
+      DB_NAME: "${BUDGET_SERVICE_DB_NAME}"
+      DB_USER: "${BUDGET_SERVICE_DB_USER}"
+      DB_PASSWORD: "${BUDGET_SERVICE_DB_PASSWORD}"
     networks:
       - family-budget-app-network
 
@@ -40,15 +44,17 @@ services:
       context: ./category-service
       dockerfile: Dockerfile
     ports:
-      - "8003:8003"
+      - "${CATEGORY_SERVICE_PORT}:${CATEGORY_SERVICE_PORT}"
     depends_on:
       - category-service-db
     environment:
-      BIND_ADDR: ":8003"
-      LOG_LEVEL: "debug"
-      DB_HOST: "category-service-db"
-      DB_PORT: "27020"
-      DB_NAME: "categories"
+      BIND_ADDR: ":${CATEGORY_SERVICE_PORT}"
+      LOG_LEVEL: "${CATEGORY_SERVICE_LOG_LEVEL}"
+      DB_HOST: "${CATEGORY_SERVICE_DB_HOST}"
+      DB_PORT: "${CATEGORY_SERVICE_DB_PORT}"
+      DB_NAME: "${CATEGORY_SERVICE_DB_NAME}"
+      DB_USER: "${CATEGORY_SERVICE_DB_USER}"
+      DB_PASSWORD: "${CATEGORY_SERVICE_DB_PASSWORD}"
     networks:
       - family-budget-app-network
 
@@ -57,63 +63,69 @@ services:
       context: ./transaction-service
       dockerfile: Dockerfile
     ports:
-      - "8004:8004"
+      - "${TRANSACTION_SERVICE_PORT}:${TRANSACTION_SERVICE_PORT}"
     depends_on:
       - transaction-service-db
     environment:
-      BIND_ADDR: ":8004"
-      LOG_LEVEL: "debug"
-      DB_HOST: "transaction-service-db"
-      DB_PORT: "27021"
-      DB_NAME: "transactions"
+      BIND_ADDR: ":${TRANSACTION_SERVICE_PORT}"
+      LOG_LEVEL: "${TRANSACTION_SERVICE_LOG_LEVEL}"
+      DB_HOST: "${TRANSACTION_SERVICE_DB_HOST}"
+      DB_PORT: "${TRANSACTION_SERVICE_DB_PORT}"
+      DB_NAME: "${TRANSACTION_SERVICE_DB_NAME}"
+      DB_USER: "${TRANSACTION_SERVICE_DB_USER}"
+      DB_PASSWORD: "${TRANSACTION_SERVICE_DB_PASSWORD}"
     networks:
       - family-budget-app-network
 
   user-service-db:
     image:  mongo:latest
+    command: mongod --port ${USER_SERVICE_DB_PORT}
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: "mongo"
-      MONGO_INITDB_ROOT_PASSWORD: "mongo"
-      MONGO_INITDB_DATABASE: "users"
+      MONGO_INITDB_ROOT_USERNAME: "${USER_SERVICE_DB_USER}"
+      MONGO_INITDB_ROOT_PASSWORD: "${USER_SERVICE_DB_PASSWORD}"
+      MONGO_INITDB_DATABASE: "${USER_SERVICE_DB_NAME}"
     ports:
-      - "27018:27017"
+      - "${USER_SERVICE_DB_PORT}:${USER_SERVICE_DB_PORT}"
     networks:
       - family-budget-app-network
 
   budget-service-db:
     image:  mongo:latest
+    command: mongod --port ${BUDGET_SERVICE_DB_PORT}
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: "mongo"
-      MONGO_INITDB_ROOT_PASSWORD: "mongo"
-      MONGO_INITDB_DATABASE: "budgets"
+      MONGO_INITDB_ROOT_USERNAME: "${BUDGET_SERVICE_DB_USER}"
+      MONGO_INITDB_ROOT_PASSWORD: "${BUDGET_SERVICE_DB_PASSWORD}"
+      MONGO_INITDB_DATABASE: "${BUDGET_SERVICE_DB_NAME}"
     ports:
-      - "27019:27017"
+      - "${BUDGET_SERVICE_DB_PORT}:${BUDGET_SERVICE_DB_PORT}"
     networks:
       - family-budget-app-network
 
   category-service-db:
     image:  mongo:latest
+    command: mongod --port ${CATEGORY_SERVICE_DB_PORT}
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: "mongo"
-      MONGO_INITDB_ROOT_PASSWORD: "mongo"
-      MONGO_INITDB_DATABASE: "categories"
+      MONGO_INITDB_ROOT_USERNAME: "${CATEGORY_SERVICE_DB_USER}"
+      MONGO_INITDB_ROOT_PASSWORD: "${CATEGORY_SERVICE_DB_PASSWORD}"
+      MONGO_INITDB_DATABASE: "${CATEGORY_SERVICE_DB_NAME}"
     ports:
-      - "27020:27017"
+      - "${CATEGORY_SERVICE_DB_PORT}:${CATEGORY_SERVICE_DB_PORT}"
     networks:
       - family-budget-app-network
 
   transaction-service-db:
     image:  mongo:latest
+    command: mongod --port ${TRANSACTION_SERVICE_DB_PORT}
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: "mongo"
-      MONGO_INITDB_ROOT_PASSWORD: "mongo"
-      MONGO_INITDB_DATABASE: "transactions"
+      MONGO_INITDB_ROOT_USERNAME: "${TRANSACTION_SERVICE_DB_USER}"
+      MONGO_INITDB_ROOT_PASSWORD: "${TRANSACTION_SERVICE_DB_PASSWORD}"
+      MONGO_INITDB_DATABASE: "${TRANSACTION_SERVICE_DB_NAME}"
     ports:
-      - "27021:27017"
+      - "${TRANSACTION_SERVICE_DB_PORT}:${TRANSACTION_SERVICE_DB_PORT}"
     networks:
       - family-budget-app-network
 
