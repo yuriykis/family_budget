@@ -2,6 +2,10 @@
 
 A simple sample application that allows user to manage budgets. It allows user to add and remove any number of budgets, add two types of transactions (income and expenses) with categories and share your own budgets with other users.
 
+### Important notes
+
+The application is in constant development. Golang app backend (app2 and app3) is not set as default yet.
+
 ## How to install in local environment
 
 ### Environment
