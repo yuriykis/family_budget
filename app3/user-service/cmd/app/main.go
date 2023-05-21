@@ -14,6 +14,10 @@ func init() {
 	flag.StringVar(&configPath, "config-path", configPath, "path to config file")
 }
 
+func myFync(a int) int {
+  return a 
+}
+
 func main() {
 	config := apiserver.NewConfig()
 	//wd, err := os.Getwd()
@@ -30,8 +34,9 @@ func main() {
 	// if err != nil {
 	// 	log.Fatal(err)
 	// }
+    myFync(1)
 
-	config.BindAddr = os.Getenv("BIND_ADDR")
+    config.BindAddr = os.Getenv("BIND_ADDR")
 	config.LogLevel = os.Getenv("LOG_LEVEL")
 	dbPort := os.Getenv("DB_PORT")
 	dbHost := os.Getenv("DB_HOST")
